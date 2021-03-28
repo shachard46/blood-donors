@@ -1,0 +1,35 @@
+.map_container {
+  width: 75%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+.form_container {
+  width: 25%;
+  height: 100%;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+.location_input_container {
+  width: 100%;
+  height: fit-content;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+#location_input {
+  width: 100%;
+}
+
+.calender_container {
+    position: absolute;
+    right: 0;
+}
+
+.date_type_container {
+    position: absolute;
+    left: 0;
+}
