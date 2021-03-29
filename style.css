@@ -1,60 +1,92 @@
+.row{
+ width: 100%;
+ position: relative;
+ height: 98vh;
+}
 .map_container {
   width: 75%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
+  float: right;
 }
 .form_container {
   width: 25%;
   height: 100%;
-  position: fixed;
-  right: 0;
-  top: 0;
-  text-align: left;
-  background-color: #4d9965;
-
-}
-.location_input_container {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  text-align: center;
-
-}
-.max_distance_container {
-  width: 100%;
-  text-align: right;
-  font-size: 1.5vw;
-  float: left;
-  margin-right: 15px;
-
-}
-.form_description {
-  width: 100%;
-  text-align: right;
-  font-size: 1.5vw;
   float: right;
-  margin-right: 15px;
+  background-color: #4d9965;
 }
-input[type="text"]::placeholder { 
-                  
+.logo { 
+  width: 10%;
+  position: fixed;
+  bottom: 2%;
+  right: 1%;
+}
+
+.location_input_container {
+  width: 80%;
+  padding: 2% 0% ;
+  text-align: center;
+  margin: 5% 10%; 
+  border-radius: 10px;
+}
+
+.discription_title_container{
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 20px;
+  position: fixed;
+  right: 1.5%;
+
+}
+.discription_txt_container{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+.max_distance_container {
+  width: 80%;
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 30px;
+  position: relative;
+  top: 8%;
+  margin: 0 auto;  
   text-align: center;
 }
-#location_input {
-  width: 100%;
+.dis_value{
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 15px;
+}
+.date_filter{
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 15px;
+  margin: 0 auto;  
+  text-align: right;
+  position: relative;
+  top: 10%;
+  right: 10%;
+}
+.date{
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 15px;
+  margin: 0 auto;  
+  text-align: left;
+  position: relative;
+  top: 5.5%;
+  left: 15%;
+}
+#map {
+  height: 100%;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.calender_container {
-    position: absolute;
-    right: 0;
+.send_buton{
+  width: 80%;
+  padding: 2% 0% ;
+  text-align: center;
+  margin: 0 auto;  
+  border-radius: 10px;
+  position: relative;
+  top: 10%;
 }
 
-.date_type_container {
-    position: absolute;
-    left: 0;
-}

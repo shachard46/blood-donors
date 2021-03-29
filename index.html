@@ -1,39 +1,57 @@
-<html>
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
 <head>
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8" />
+    <script src="Map.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAn-e1Drb9Xo7lq-yjrFbtOOzLQEX5XATs&callback=initMap"></script>
 </head>
-
 <body>
-    
-    <div class="map_container">
-        <head>
-            <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-            <meta charset="utf-8">
-            <style>
-              #map {
-                height: 100%;
-              }
-              html, body {
-                height: 100%;
-                margin: 0;
-                padding: 0;
-              }
-            </style>
-          </head>
-          <body>
-            <div id="map"></div>
-            <script src="Map.js">
-            </script>
-            <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAn-e1Drb9Xo7lq-yjrFbtOOzLQEX5XATs&callback=initMap">
-            </script>
-          </body>
-    </div>
-    <div class="form_container">
-        <form action="POST">
-            <div class="location_input_container">
-                <input type="text" placeholder="?איפה אתה גר" id="location_input">
-                <input type=button onClick=getVal() value='click here'>
+    <div class="row">
+        <div class="form_container">
+            <img src="Logo.png" class="logo">
+            <input type="text" placeholder="איפה אתה גר?" class="location_input_container" id="location_input">
+            <div class="discription_title_container">
+                <main><span>מה חשוב לך?</span></main>
+                <div class="discription_txt_container">
+                    <article><span>ניתן לבחור מתוך האפשרויות הבאות,</span></article>
+                    <article><span>כל בחירה תסנן את התוצאות</span> </article>
+                </div>
+            </div>
+            <div class="max_distance_container">
+                <article><span>max distance</span> </article>
+                <div class="slidecontainer">
+                    <div class="slider_container">
+                        <span class="dis_value" id="Value"></span>
+                        <input type="range" min="1" max="100" value="50" class="slider" id="disRange" dir="ltr">
+                    </div>
+                    <script>
+                        var slider = document.getElementById("disRange");
+                        var output = document.getElementById("Value");
+                        output.innerHTML = slider.value;
+                        slider.oninput = function() {
+                        output.innerHTML = this.value;
+                        }
+                    </script>
+                  </div>
+            </div>
+            <div class="date_filter">
+                <div>
+                    <input type="radio" id="Exact_date" name="drone" value="תאריך מדויק"
+                           checked>
+                    <label for="Exact_date">תאריך מדויק</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="Date_range" name="drone" value="טווח תאריכים">
+                    <label for="Date_range">טווח תאריכים</label>
+                  </div>
+            </div>
+            <div class="date">
+                <input type="date" name="date" id="date">
+            </div>
+            <div class="send_buton">
+                <button type="button" onClick=getVal()>סנן תוצאות</button>
                 <script>
                     function getVal()
                     {
@@ -43,27 +61,7 @@
                     }
                 </script>
             </div>
-            <div class="form_description">
-                <div>
-                    <p>?מה חשוב לך</p>
-                </div>
-            <div class="max_distance_container" >
-                <p style="text-align:center">Max Distance</p>
-                <input type="range" min="1" max="200" value="100" class="slider" id="myRange">
-            </div>
-            <div class="date_container">
-                <div class="calender_container">
-                    <input type="date" name="date" id="date">
-                </div>
-                <div class="date_type_container">
-                    <span>תאריך מדויק או טווח תאריכים</span>
-                    <input type="radio" name="date_type" id="exact"><br>
-                    <input type="radio" name="date_type" id="range"><br>
-                </div>
-            </div>
-            
-                </form>
-            </div>
+        </div><div id="map" class="map_container"></div></div>
+        
 </body>
-
 </html>
