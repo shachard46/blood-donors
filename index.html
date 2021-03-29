@@ -1,13 +1,12 @@
 <html>
-
 <head>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    
     <div class="map_container">
         <head>
-            <title>Geocoding service</title>
             <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
             <meta charset="utf-8">
             <style>
@@ -33,22 +32,24 @@
     <div class="form_container">
         <form action="POST">
             <div class="location_input_container">
-                <input type="text" placeholder="איפה אתה גר?" id="location_input">
+                <input type="text" placeholder="?איפה אתה גר" id="location_input">
                 <input type=button onClick=getVal() value='click here'>
                 <script>
                     function getVal()
                     {
                         var txt = document.getElementById("location_input").value;
                         set_home_Adreess(txt);
+                        readFile_fan();
                     }
                 </script>
             </div>
-            <div>
-                <span>מה חשוב לך?</span>
-            </div>
-            <div>
-                <span>Max Distance</span>
-                <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+            <div class="form_description">
+                <div>
+                    <p>?מה חשוב לך</p>
+                </div>
+            <div class="max_distance_container" >
+                <p style="text-align:center">Max Distance</p>
+                <input type="range" min="1" max="200" value="100" class="slider" id="myRange">
             </div>
             <div class="date_container">
                 <div class="calender_container">
@@ -60,9 +61,9 @@
                     <input type="radio" name="date_type" id="range"><br>
                 </div>
             </div>
-        </form>
-    </div>
-    
+            
+                </form>
+            </div>
 </body>
 
 </html>

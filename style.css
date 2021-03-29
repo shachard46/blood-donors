@@ -11,15 +11,40 @@
   position: fixed;
   right: 0;
   top: 0;
+  text-align: left;
+  background-color: #4d9965;
+
 }
 .location_input_container {
   width: 100%;
-  height: fit-content;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  text-align: center;
 
+}
+.max_distance_container {
+  width: 100%;
+  text-align: right;
+  font-size: 1.5vw;
+  float: left;
+  margin-right: 15px;
+
+}
+.form_description {
+  width: 100%;
+  text-align: right;
+  font-size: 1.5vw;
+  float: right;
+  margin-right: 15px;
+}
+input[type="text"]::placeholder { 
+                  
+  text-align: center;
+}
 #location_input {
   width: 100%;
 }
