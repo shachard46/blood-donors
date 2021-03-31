@@ -10,13 +10,63 @@
         margin: 0;
         padding: 0;
       }
+      td,th{
+        border: 1px solid #cccccc;
+        padding: 8px;
+      }
+      th{
+        font-weight: bold;
+      }
+      .table{
+        font-family: arial,sans-serif;
+        border-collapse:collapse;
+        width: 100%;
+        
+      }
     </style>
   </head>
   <body>
-    <div id="map"></div>
-    <script src="Map.js">
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAn-e1Drb9Xo7lq-yjrFbtOOzLQEX5XATs&callback=initMap">
-    </script>
+    <table>
+      <td>Name:</td>
+          <td><input type="text" id="address"></td>
+          <td>Age:</td>
+          <td><input type="text" id="Start_time">
+            <td>Age1:</td>
+        <td><input type="text" id="end_Time">
+        <input type="button" id="add" value="Add" onclick="Javascript:addRow()"></td>
+      
+  </table>
+    <div class="donation_table">
+      <table  id="myTableData"  border="1" cellpadding="2">
+          <tr>
+            <td><b>address</b></td>
+            <td><b>Start time</b></td>
+            <td><b>end Time</b></td>
+          </tr>
+
+      </table>
+      <script>
+        function addRow() {
+          var donation_list=[ 
+            {address:"אמץ",startTime:"17:00",endTime:"19:00"},                
+            {address:"בחן",startTime:"13:00",endTime:"15:00"},          
+            {address:"בת חפר",startTime:"17:00",endTime:"19:30"}
+            ];
+          for (donation in donation_list){
+            console.log(donation_list[donation].address.value);
+          var myName = String(donation_list[donation].address);
+          var age = donation_list[donation].startTime;
+          var age1 = donation_list[donation].endTime;
+          var table = document.getElementById("myTableData");
+       
+          var rowCount = table.rows.length;
+          var row = table.insertRow(rowCount);
+          row.insertCell(0).innerHTML= myName;
+          row.insertCell(1).innerHTML= age;
+          row.insertCell(2).innerHTML= age1;
+          }
+          
+      }
+      </script>
+  </div>
   </body>

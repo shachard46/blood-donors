@@ -90,3 +90,10 @@ html, body {
   top: 10%;
 }
 
+td,th{
+  border: 1px solid #cccccc;
+  padding: 8px;
+  width: 80%;
+ 
+  
+}

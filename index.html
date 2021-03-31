@@ -5,7 +5,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8" />
     <script src="Map.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAn-e1Drb9Xo7lq-yjrFbtOOzLQEX5XATs&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAn-e1Drb9Xo7lq-yjrFbtOOzLQEX5XATs&libraries=geometry&callback=initMap"></script>
 </head>
 <body>
     <div class="row">
@@ -57,10 +57,23 @@
                     {
                         var txt = document.getElementById("location_input").value;
                         set_home_Adreess(txt);
-                        readFile_fan();
+                        addRow();
+
                     }
                 </script>
-            </div>
+                    <table  id="myTableData"  border="1" cellpadding="2">
+                        <tr>
+                            <td><b>-</b></td>
+                            <td><b>תאריך</b></td>
+                            <td><b>כתובת</b></td>
+                            <td><b>זמן התחלה</b></td>
+                            <td><b>זמן סיום</b></td>
+                            <td><b>מרחק</b></td>
+                        </tr>
+                    </table>
+
+            </div>            
+        
         </div><div id="map" class="map_container"></div></div>
         
 </body>
