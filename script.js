@@ -1,4 +1,4 @@
-var donation_list = [
+let donation_list = [
   {
     date: "31/03/21",
     address: "אמץ",
@@ -21,31 +21,34 @@ var donation_list = [
     dis: "",
   },
 ];
-var dis_list = [];
-var geocoder;
-var map;
-var home_Adreess = "יד חנה";
-function set_description(donation) {
-  var txt = `starting time:${donation.startTime} \n`;
+let dis_list = [];
+let geocoder;
+let map;
+let homeAddress;
+function setDescription(donation) {
+  let txt = `starting time:${donation.startTime} \n`;
   txt = txt + `end time: ${donation.endTime} \n`;
   txt = txt + `location: ${donation.address}`;
   return txt;
 }
-function set_home_Adreess(Adreess) {
-  home_Adreess = Adreess;
+function SetHomeAddress(Adreess) {
+  homeAddress = Adreess;
   initMap();
 }
 function initMap() {
-  var map = new google.maps.Map(document.getElementById("map"), {
+  if (homeAddress == undefined) {
+    homeAddress = getCurrentLocation();
+  }
+  let map = new google.maps.Map(document.getElementById("map"), {
     zoom: 13,
   });
-  setPin(map, home_Adreess, true, "הבית שלך");
+  setPin(map, homeAddress, true, "הבית שלך");
   for (let donation in donation_list) {
     setPin(
       map,
       donation_list[donation].address,
       false,
-      set_description(donation_list[donation])
+      setDescription(donation_list[donation])
     );
   }
 }
@@ -78,16 +81,18 @@ function setPin(map, Adreess, home, description) {
 }
 
 function addRow() {
-  var table = document.getElementById("myTableData");
-  var rowCount = table.rows.length;
-  console.log(donation_list.length);
+  let table = document.getElementById("myTableData");
+  let rowCount = table.rows.length;
+    // let sorted_list = _.sortBy(donation_list, (address) => {
+        // return calculateDistances(homeAddress, donation_list[address])
+    // })
   for (index in donation_list) {
-    var date = donation_list[index].date;
-    var address = donation_list[index].address;
-    var startTime = donation_list[index].startTime;
-    var endTime = donation_list[index].endTime;
+    let date = donation_list[index].date;
+    let address = donation_list[index].address;
+    let startTime = donation_list[index].startTime;
+    let endTime = donation_list[index].endTime;
     rowCount = table.rows.length;
-    var row = table.insertRow(rowCount);
+    let row = table.insertRow(rowCount);
     row.insertCell(0).innerHTML = rowCount;
     row.insertCell(1).innerHTML = date;
     row.insertCell(2).innerHTML = address;
@@ -96,35 +101,53 @@ function addRow() {
   }
 }
 
-// function calculateDistances(origin,destination) {
-//     console.log(origin,destination)
-//     var service = new google.maps.DistanceMatrixService(); //initialize the distance service
-//     service.getDistanceMatrix(
-//         {
-//         origins: [origin], //set origin, you can specify multiple sources here
-//         destinations: [destination],//set destination, you can specify multiple destinations here
-//         travelMode: google.maps.TravelMode.DRIVING, //set the travelmode
-//         unitSystem: google.maps.UnitSystem.METRIC,//The unit system to use when displaying distance
-//         avoidHighways: false,
-//         avoidTolls: false
-//         }, calcDistance); // here calcDistance is the call back function
-//     }
-//     function calcDistance(response, status) {
-//     if (status != google.maps.DistanceMatrixStatus.OK) { // check if there is valid result
-//         alert('Error was: ' + status);
-//     } else {
-//         var origins = response.originAddresses;
-//         var destinations = response.destinationAddresses;
-//         for (var i = 0; i < origins.length; i++) {
-//         var results = response.rows[i].elements;
-
-//         for (var j = 0; j < results.length; j++) {
-//             console.log('Distance from '+origins[i] + ' to ' + destinations[j]+ ': ' + results[j].distance.text ); // alert the result
-//             if (dis_list.length==donation_list.length){
-//                 dis_list = [];
-//                 }
-//             dis_list.push(results[j].distance.text);
-//         }
-//         }
-//     }
-//     }
+function getCurrentLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        alert(pos.lat);
+        return pos;
+      },
+      () => {}
+    );
+  }
+  return "יד חנה";
+}
+function autoComplete() {
+  addressField = document.getElementById("location_input");
+  autocomplete = new google.maps.places.Autocomplete(addressField, {
+    componentRestrictions: { country: ["israel"] },
+    fields: ["address_components", "geometry"],
+    types: ["address"],
+  });
+  //     autocomplete.addListener("place_changed", () => {
+  //     autocomplete.getPlace();
+  //   });
+}
+function calculateDistances(origin, destinations) {
+  let durations = {};
+  let service = new google.maps.DistanceMatrixService(); //initialize the distance service
+  service.getDistanceMatrix(
+    {
+      origins: [origin], //set origin, you can specify multiple sources here
+      destinations: destinations, //set destination, you can specify multiple destinations here
+      travelMode: google.maps.TravelMode.DRIVING, //set the travelmode
+      unitSystem: google.maps.UnitSystem.METRIC, //The unit system to use when displaying distance
+      avoidHighways: false,
+      avoidTolls: false,
+    },
+    (response, status) => {
+      if (status == google.maps.DistanceMatrixStatus.OK) {
+        const elements = response.rows[0].elements;
+        for (i = 0; i < elements.length; i++) {
+          durations[destinations[i]] = elements[i].duration.value;
+        }
+      }
+    }
+  );
+  return durations;
+}
