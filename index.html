@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
+<!-- api key => AIzaSyAn-e1Drb9Xo7lq-yjrFbtOOzLQEX5XATs -->
 
 <head>
     <link rel="stylesheet" href="style.css">
@@ -8,7 +9,7 @@
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/underscore@1.12.1/underscore-min.js"></script>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=&libraries=geometry,places&callback=initMap"></script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAn-e1Drb9Xo7lq-yjrFbtOOzLQEX5XATs&libraries=places&,geometry&callback=initMap"></script>
 </head>
 
 <body>
@@ -42,17 +43,13 @@
                 </div>
             </div>
             <div class="date_filter">
-                <div>
-                    <input type="radio" id="Exact_date" name="drone" value="תאריך מדויק" checked>
-                    <label for="Exact_date">תאריך מדויק</label>
-                </div>
-                <div>
-                    <input type="radio" id="Date_range" name="drone" value="טווח תאריכים">
-                    <label for="Date_range">טווח תאריכים</label>
-                </div>
+                <input type="radio" name="radio_date" value="exact_date">
+                <label for="exact_date">תאריך מדויק</label><br>
+                <input type="radio" name="radio_date" value="Range_of_dates">
+                <label for="Range_of_dates">טווח תאריכים</label><br>
             </div>
-            <div class="date">
-                <input type="date" name="date" id="date">
+            <div class="date_calander">
+                <input type="date" name="date" id="calander">
             </div>
             <div class="send_buton">
                 <button type="button" onClick=getVal()>סנן תוצאות</button>
@@ -61,8 +58,10 @@
                         var txt = document.getElementById("location_input").value;
                         SetHomeAddress(txt);
                         addRow();
+                        filterByDate("03/04/21");
 
                     }
+
                 </script>
                 <table id="myTableData"   border="1" cellpadding="2">
                     <tr>

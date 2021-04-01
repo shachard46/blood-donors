@@ -62,13 +62,13 @@
   top: 10%;
   right: 10%;
 }
-.date{
+.date_calander{
   font-family: "Arial Black", Gadget, sans-serif;
   font-size: 15px;
   margin: 0 auto;  
   text-align: left;
   position: relative;
-  top: 5.5%;
+  top: 7.5%;
   left: 15%;
 }
 #map {
@@ -87,7 +87,7 @@ html, body {
   margin: 0 auto;  
   border-radius: 10px;
   position: relative;
-  top: 10%;
+  top: 15%;
 }
 
 td,th{
@@ -96,4 +96,10 @@ td,th{
   width: 80%;
  
   
+}
+.date_filter{
+  width: 100%;
+  margin: 0 auto;  
+  position: relative;
+  top: 14%;
 }
