@@ -83,9 +83,9 @@ function setPin(map, Adreess, home, description) {
 function addRow() {
   let table = document.getElementById("myTableData");
   let rowCount = table.rows.length;
-    // let sorted_list = _.sortBy(donation_list, (address) => {
-        // return calculateDistances(homeAddress, donation_list[address])
-    // })
+  // let sorted_list = _.sortBy(donation_list, (address) => {
+  // return calculateDistances(homeAddress, donation_list[address])
+  // })
   for (index in donation_list) {
     let date = donation_list[index].date;
     let address = donation_list[index].address;
@@ -129,7 +129,7 @@ function autoComplete() {
   //   });
 }
 function calculateDistances(origin, destinations) {
-  let durations = {};
+  let durations = [];
   let service = new google.maps.DistanceMatrixService(); //initialize the distance service
   service.getDistanceMatrix(
     {
@@ -144,7 +144,10 @@ function calculateDistances(origin, destinations) {
       if (status == google.maps.DistanceMatrixStatus.OK) {
         const elements = response.rows[0].elements;
         for (i = 0; i < elements.length; i++) {
-          durations[destinations[i]] = elements[i].duration.value;
+          durations[i] = {
+            address: destinations[i],
+            duration: elements[i].duration.value,
+          };
         }
       }
     }
