@@ -1,33 +1,41 @@
 let all_donation_list = [
   {
-    date: "02/04/21",
+    date: "20/4/21",
     address: "אמץ",
     startTime: "17:00",
     endTime: "19:00",
     dis: "",
   },
   {
-    date: "03/04/21",
+    date: "4/4/21",
     address: "בחן",
     startTime: "13:00",
     endTime: "15:00",
     dis: "",
   },
   {
-    date: "03/04/21",
+    date: "3/4/21",
     address: "בת חפר",
     startTime: "17:00",
     endTime: "19:30",
     dis: "",
   },
 ];
-let filterd_donation_list = all_donation_list;
+let filterd_donation_list = [];
 let dis_list = [];
 let geocoder;
 let map;
 let homeAddress;
 let date_radio;
 
+function translateCalanderDate() {
+  var date = new Date(document.getElementById("calander").value);
+  var day = date.getDate();
+  var month = date.getMonth() + 1;
+  var year = date.getYear() - 100;
+  var newDate = [day, month, year].join('/');
+  return newDate;
+}
 function getDateFilters() {
   var ele = document.getElementsByName('radio_date');
   for (i = 0; i < ele.length; i++) {
@@ -37,17 +45,20 @@ function getDateFilters() {
     }
   }
 }
-function filterByDate(date) {
-  console.log(filterd_donation_list);
+function filterByDate() {
+  // console.log(filterd_donation_list);
+  var date = translateCalanderDate(document.getElementById("calander").value);
   for (let i in all_donation_list) {
     if (getDateFilters() == "exact_date") {
-      if (all_donation_list[i].date != date) {
-        filterd_donation_list.splice(i, 1);
+      if (all_donation_list[i].date == date) {
+        filterd_donation_list.splice(i, 1, all_donation_list[i]);
       }
+    }
+    else {
     }
 
   }
-  console.log(filterd_donation_list);
+  console.log(filterd_donation_list, "1");
 
 
 }
