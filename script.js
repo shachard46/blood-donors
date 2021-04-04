@@ -27,6 +27,14 @@ let geocoder;
 let map;
 let homeAddress;
 let date_radio;
+var tableRows = document.getElementsByTagName('myTableData');
+
+for (var i = 0; i < tableRows.length; i += 1) {
+  tableRows[i].addEventListener('mouseover', function (e) {
+    console.log("sdsd");
+  });
+  // or attachEvent, depends on browser
+}
 function translateCalanderDate(date) {
   var date = new Date(date);
   var day = date.getDate();
@@ -80,6 +88,7 @@ function SetHomeAddress(Adreess) {
   initMap();
 }
 function initMap() {
+  filterByDate();
   if (homeAddress == undefined) {
     homeAddress = getCurrentLocation();
   }
@@ -87,14 +96,15 @@ function initMap() {
     zoom: 13,
   });
   setPin(map, homeAddress, true, "הבית שלך");
-  for (let donation in all_donation_list) {
+  for (let donation in filterd_donation_list) {
     setPin(
       map,
-      all_donation_list[donation].address,
+      filterd_donation_list[donation].address,
       false,
-      setDescription(all_donation_list[donation])
+      setDescription(filterd_donation_list[donation])
     );
   }
+
 }
 
 function setPin(map, Adreess, home, description) {
@@ -103,28 +113,30 @@ function setPin(map, Adreess, home, description) {
     if (status === "OK") {
       if (home == true) {
         map.setCenter(results[0].geometry.location);
-        const beachMarker = new google.maps.Marker({
+        const Marker = new google.maps.Marker({
           position: results[0].geometry.location,
           map: map,
           icon: "./img/Home_icon.png",
           title: description,
         });
+        clickMarker(Marker);
       } else {
-        const beachMarker = new google.maps.Marker({
+        const Marker = new google.maps.Marker({
           position: results[0].geometry.location,
           map: map,
           icon: "./img/Mada_icon.png",
           title: description,
         });
+        clickMarker(Marker);
       }
     } else {
       alert("Geocode was not successful for the following reason: " + status);
     }
-  });
-}
 
+  });
+
+}
 function addRow() {
-  filterByDate();
   let table = document.getElementById("myTableData");
   let rowCount = table.rows.length;
   if (rowCount > 1) {
@@ -146,7 +158,37 @@ function addRow() {
     row.insertCell(4).innerHTML = endTime;
   }
 }
+function getRow(marker) {
+  filterByDate();
+  var markerTitel = marker.getTitle();
+  for (var i = 0; i < filterd_donation_list.length; i++) {
+    console.log(i);
+    var listTitel = setDescription(filterd_donation_list[i]);
+    console.log(markerTitel);
+    console.log(listTitel);
+    if (markerTitel == listTitel) {
+      console.log("true");
+      return i;
+    }
+  }
+}
 
+function clickMarker(marker) {
+  google.maps.event.addListener(marker, 'click', function () {
+    markRow(getRow(marker) + 1);
+  });
+}
+function markRow(index) {
+  let table = document.getElementById("myTableData");
+  if (table.rows[index].style.backgroundColor == "red") {
+    table.rows[index].style.backgroundColor = 'green';
+  }
+  else {
+    table.rows[index].style.backgroundColor = "red";
+  }
+
+
+}
 function getCurrentLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
