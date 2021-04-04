@@ -1,20 +1,20 @@
 let all_donation_list = [
   {
-    date: "20/4/21",
+    date: "4/4/21",
     address: "אמץ",
     startTime: "17:00",
     endTime: "19:00",
     dis: "",
   },
   {
-    date: "4/4/21",
+    date: "20/4/21",
     address: "בחן",
     startTime: "13:00",
     endTime: "15:00",
     dis: "",
   },
   {
-    date: "3/4/21",
+    date: "7/4/21",
     address: "בת חפר",
     startTime: "17:00",
     endTime: "19:30",
@@ -27,9 +27,8 @@ let geocoder;
 let map;
 let homeAddress;
 let date_radio;
-
-function translateCalanderDate() {
-  var date = new Date(document.getElementById("calander").value);
+function translateCalanderDate(date) {
+  var date = new Date(date);
   var day = date.getDate();
   var month = date.getMonth() + 1;
   var year = date.getYear() - 100;
@@ -46,22 +45,29 @@ function getDateFilters() {
   }
 }
 function filterByDate() {
-  // console.log(filterd_donation_list);
-  var date = translateCalanderDate(document.getElementById("calander").value);
-  for (let i in all_donation_list) {
-    if (getDateFilters() == "exact_date") {
-      if (all_donation_list[i].date == date) {
+  filterd_donation_list = [];
+  var date = new Date(document.getElementById("calander").value);
+  if (getDateFilters() == "exact_date") {
+    for (let i in all_donation_list) {
+      if (all_donation_list[i].date == translateCalanderDate(date)) {
         filterd_donation_list.splice(i, 1, all_donation_list[i]);
       }
     }
-    else {
-    }
-
   }
-  console.log(filterd_donation_list, "1");
+  else {
+    for (let i in all_donation_list) {
+      for (let j = 0; j < 5; j++) {
+        var tempDate = new Date(document.getElementById("calander").value);
+        if (all_donation_list[i].date == translateCalanderDate(tempDate.setDate(tempDate.getDate() + j))) {
+          filterd_donation_list.splice(i, 1, all_donation_list[i]);
+          break
+        }
+      }
 
-
+    }
+  }
 }
+
 
 function setDescription(donation) {
   let txt = `starting time:${donation.startTime} \n`;
@@ -92,7 +98,6 @@ function initMap() {
 }
 
 function setPin(map, Adreess, home, description) {
-  const image = "./img/Home_icon.png";
   geocoder = new google.maps.Geocoder();
   geocoder.geocode({ address: Adreess }, function (results, status) {
     if (status === "OK") {
@@ -119,16 +124,19 @@ function setPin(map, Adreess, home, description) {
 }
 
 function addRow() {
+  filterByDate();
   let table = document.getElementById("myTableData");
   let rowCount = table.rows.length;
-  // let sorted_list = _.sortBy(donation_list, (address) => {
-  // return calculateDistances(homeAddress, donation_list[address])
-  // })
-  for (index in all_donation_list) {
-    let date = all_donation_list[index].date;
-    let address = all_donation_list[index].address;
-    let startTime = all_donation_list[index].startTime;
-    let endTime = all_donation_list[index].endTime;
+  if (rowCount > 1) {
+    for (let i = rowCount; i > 1; i--) {
+      table.deleteRow(i - 1);
+    }
+  }
+  for (index in filterd_donation_list) {
+    let date = filterd_donation_list[index].date;
+    let address = filterd_donation_list[index].address;
+    let startTime = filterd_donation_list[index].startTime;
+    let endTime = filterd_donation_list[index].endTime;
     rowCount = table.rows.length;
     let row = table.insertRow(rowCount);
     row.insertCell(0).innerHTML = rowCount;
