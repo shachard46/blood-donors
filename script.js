@@ -4,21 +4,21 @@ let all_donation_list = [
     address: "אמץ",
     startTime: "17:00",
     endTime: "19:00",
-    dis: "",
+    dis: "100",
   },
   {
     date: "20/4/21",
     address: "בחן",
     startTime: "13:00",
     endTime: "15:00",
-    dis: "",
+    dis: "100",
   },
   {
     date: "7/4/21",
     address: "בת חפר",
     startTime: "17:00",
     endTime: "19:30",
-    dis: "",
+    dis: "100",
   },
 ];
 let filterd_donation_list = [];
@@ -31,64 +31,11 @@ var tableRows = document.getElementsByTagName('myTableData');
 
 for (var i = 0; i < tableRows.length; i += 1) {
   tableRows[i].addEventListener('mouseover', function (e) {
-    console.log("sdsd");
   });
   // or attachEvent, depends on browser
 }
-function translateCalanderDate(date) {
-  var date = new Date(date);
-  var day = date.getDate();
-  var month = date.getMonth() + 1;
-  var year = date.getYear() - 100;
-  var newDate = [day, month, year].join('/');
-  return newDate;
-}
-function getDateFilters() {
-  var ele = document.getElementsByName('radio_date');
-  for (i = 0; i < ele.length; i++) {
-    if (ele[i].checked) {
-      let x = ele[i].value;
-      return x;
-    }
-  }
-}
-function filterByDate() {
-  filterd_donation_list = [];
-  var date = new Date(document.getElementById("calander").value);
-  if (getDateFilters() == "exact_date") {
-    for (let i in all_donation_list) {
-      if (all_donation_list[i].date == translateCalanderDate(date)) {
-        filterd_donation_list.splice(i, 1, all_donation_list[i]);
-      }
-    }
-  }
-  else {
-    for (let i in all_donation_list) {
-      for (let j = 0; j < 5; j++) {
-        var tempDate = new Date(document.getElementById("calander").value);
-        if (all_donation_list[i].date == translateCalanderDate(tempDate.setDate(tempDate.getDate() + j))) {
-          filterd_donation_list.splice(i, 1, all_donation_list[i]);
-          break
-        }
-      }
-
-    }
-  }
-}
-
-
-function setDescription(donation) {
-  let txt = `starting time:${donation.startTime} \n`;
-  txt = txt + `end time: ${donation.endTime} \n`;
-  txt = txt + `location: ${donation.address}`;
-  return txt;
-}
-function SetHomeAddress(Adreess) {
-  homeAddress = Adreess;
-  initMap();
-}
 function initMap() {
-  filterByDate();
+  filterList();
 
   if (homeAddress == undefined) {
     homeAddress = getCurrentLocation();
@@ -107,7 +54,57 @@ function initMap() {
   }
 
 }
+function translateCalanderDate(date) {
+  var date = new Date(date);
+  var day = date.getDate();
+  var month = date.getMonth() + 1;
+  var year = date.getYear() - 100;
+  var newDate = [day, month, year].join('/');
+  return newDate;
+}
+function getDateFilters() {
+  var ele = document.getElementsByName('radio_date');
+  for (i = 0; i < ele.length; i++) {
+    if (ele[i].checked) {
+      let x = ele[i].value;
+      return x;
+    }
+  }
+}
+function filterList() {
+  filterd_donation_list = [];
+  var slider = document.getElementById("disRange").value;
+  var date = new Date(document.getElementById("calander").value);
+  if (getDateFilters() == "exact_date") {
+    for (let i in all_donation_list) {
+      if (all_donation_list[i].date == translateCalanderDate(date) && parseInt(slider) < parseInt(all_donation_list[i].dis)) {
+        filterd_donation_list.splice(i, 1, all_donation_list[i]);
+      }
+    }
+  }
+  else {
+    for (let i in all_donation_list) {
+      for (let j = 0; j < 5; j++) {
+        var tempDate = new Date(document.getElementById("calander").value);
+        if (all_donation_list[i].date == translateCalanderDate(tempDate.setDate(tempDate.getDate() + j)) && parseInt(slider) < parseInt(all_donation_list[i].dis)) {
+          filterd_donation_list.splice(i, 1, all_donation_list[i]);
+          break
+        }
+      }
 
+    }
+  }
+}
+function setDescription(donation) {
+  let txt = `starting time:${donation.startTime} \n`;
+  txt = txt + `end time: ${donation.endTime} \n`;
+  txt = txt + `location: ${donation.address}`;
+  return txt;
+}
+function SetHomeAddress(Adreess) {
+  homeAddress = Adreess;
+  initMap();
+}
 function setPin(map, Adreess, home, description) {
   geocoder = new google.maps.Geocoder();
   geocoder.geocode({ address: Adreess }, function (results, status) {
@@ -137,7 +134,7 @@ function setPin(map, Adreess, home, description) {
   });
 
 }
-function addRow() {
+function updateTable() {
   let table = document.getElementById("myTableData");
   let rowCount = table.rows.length;
   if (rowCount > 1) {
@@ -150,6 +147,7 @@ function addRow() {
     let address = filterd_donation_list[index].address;
     let startTime = filterd_donation_list[index].startTime;
     let endTime = filterd_donation_list[index].endTime;
+    let dis = filterd_donation_list[index].dis;
     rowCount = table.rows.length;
     let row = table.insertRow(rowCount);
     row.insertCell(0).innerHTML = rowCount;
@@ -157,22 +155,23 @@ function addRow() {
     row.insertCell(2).innerHTML = address;
     row.insertCell(3).innerHTML = startTime;
     row.insertCell(4).innerHTML = endTime;
+    row.insertCell(5).innerHTML = dis;
+
   }
 }
-function getRow(marker) {
-  filterByDate();
+function getRowIndex(marker) {
+  filterList();
   var markerTitel = marker.getTitle();
   for (var i = 0; i < filterd_donation_list.length; i++) {
     var listTitel = setDescription(filterd_donation_list[i]);
     if (markerTitel == listTitel) {
-      return i;
+      return i + 1;
     }
   }
 }
-
 function clickMarker(marker) {
   google.maps.event.addListener(marker, 'click', function () {
-    markRow(getRow(marker) + 1);
+    markRow(getRowIndex(marker));
   });
 }
 function getRGB(str) {
@@ -199,7 +198,6 @@ function markRow(index) {
   let r = parseInt(getRGB(rgb).red);
   let g = parseInt(getRGB(rgb).green);
   let b = parseInt(getRGB(rgb).blue);
-  console.log(rgbToHex(r, g, b));
   if (rgbToHex(r, g, b) == secColor) {
     table.rows[index].style.backgroundColor = redbackgroundColor;
   }
