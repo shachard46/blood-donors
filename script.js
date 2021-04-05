@@ -30,7 +30,7 @@ let date_radio;
 var tableRows = document.getElementsByTagName("myTableData");
 
 for (var i = 0; i < tableRows.length; i += 1) {
-  tableRows[i].addEventListener("mouseover", function (e) {});
+  tableRows[i].addEventListener("mouseover", function (e) { });
   // or attachEvent, depends on browser
 }
 function initMap() {
@@ -77,9 +77,9 @@ function filterByDate(exact, list, date) {
     let inRange =
       Math.abs(
         calDate.getDate() -
-          date.getDate() +
-          10 * (calDate.getMonth() - date.getMonth()) +
-          100 * (calDate.getYear() - date.getYear())
+        date.getDate() +
+        10 * (calDate.getMonth() - date.getMonth()) +
+        100 * (calDate.getYear() - date.getYear())
       ) <= 5;
     return exact
       ? translateCalanderDate(e.date) == translateCalanderDate(date)
@@ -97,35 +97,7 @@ function filterList(list, callback) {
     (filtered) => callback(filtered)
   );
 }
-// function filterList() {
-//   filterd_donation_list = [];
-//   var slider = document.getElementById("disRange").value;
-//   var date = new Date(document.getElementById("calander").value);
-//   if (getDateFilters() == "exact_date") {
-//     for (let i in all_donation_list) {
-//       if (
-//         all_donation_list[i].date == translateCalanderDate(date) &&
-//         parseInt(slider) < parseInt(all_donation_list[i].dis)
-//       ) {
-//         filterd_donation_list.splice(i, 1, all_donation_list[i]);
-//       }
-//     }
-//   } else {
-//     for (let i in all_donation_list) {
-//       for (let j = 0; j < 5; j++) {
-//         var tempDate = new Date(document.getElementById("calander").value);
-//         if (
-//           all_donation_list[i].date ==
-//             translateCalanderDate(tempDate.setDate(tempDate.getDate() + j)) &&
-//           parseInt(slider) < parseInt(all_donation_list[i].dis)
-//         ) {
-//           filterd_donation_list.splice(i, 1, all_donation_list[i]);
-//           break;
-//         }
-//       }
-//     }
-//   }
-// }
+
 function setDescription(donation) {
   let txt = `starting time:${donation.startTime} \n`;
   txt = txt + `end time: ${donation.endTime} \n`;
@@ -205,10 +177,10 @@ function getRGB(str) {
   );
   return match
     ? {
-        red: match[1],
-        green: match[2],
-        blue: match[3],
-      }
+      red: match[1],
+      green: match[2],
+      blue: match[3],
+    }
     : {};
 }
 function componentToHex(c) {
