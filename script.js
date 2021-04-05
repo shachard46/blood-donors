@@ -89,6 +89,7 @@ function SetHomeAddress(Adreess) {
 }
 function initMap() {
   filterByDate();
+
   if (homeAddress == undefined) {
     homeAddress = getCurrentLocation();
   }
@@ -162,12 +163,8 @@ function getRow(marker) {
   filterByDate();
   var markerTitel = marker.getTitle();
   for (var i = 0; i < filterd_donation_list.length; i++) {
-    console.log(i);
     var listTitel = setDescription(filterd_donation_list[i]);
-    console.log(markerTitel);
-    console.log(listTitel);
     if (markerTitel == listTitel) {
-      console.log("true");
       return i;
     }
   }
@@ -178,13 +175,36 @@ function clickMarker(marker) {
     markRow(getRow(marker) + 1);
   });
 }
+function getRGB(str) {
+  var match = str.match(/rgba?\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)?(?:, ?(\d(?:\.\d?))\))?/);
+  return match ? {
+    red: match[1],
+    green: match[2],
+    blue: match[3]
+  } : {};
+}
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+function rgbToHex(r, g, b) {
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
 function markRow(index) {
   let table = document.getElementById("myTableData");
-  if (table.rows[index].style.backgroundColor == "red") {
-    table.rows[index].style.backgroundColor = 'green';
+  var rows = table.getElementsByTagName("tr");
+  let redbackgroundColor = '#8A0303';
+  let secColor = '#ffffff';
+  var rgb = (rows[index].style.backgroundColor);
+  let r = parseInt(getRGB(rgb).red);
+  let g = parseInt(getRGB(rgb).green);
+  let b = parseInt(getRGB(rgb).blue);
+  console.log(rgbToHex(r, g, b));
+  if (rgbToHex(r, g, b) == secColor) {
+    table.rows[index].style.backgroundColor = redbackgroundColor;
   }
   else {
-    table.rows[index].style.backgroundColor = "red";
+    table.rows[index].style.backgroundColor = secColor;
   }
 
 
