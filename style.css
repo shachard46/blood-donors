@@ -1,7 +1,7 @@
-.row{
- width: 100%;
- position: relative;
- height: 98vh;
+.row {
+  width: 100%;
+  position: relative;
+  height: 98vh;
 }
 .map_container {
   width: 75%;
@@ -11,9 +11,9 @@
   width: 25%;
   height: 100%;
   float: right;
-  background-color: #8A0303;
+  background-color: #8a0303;
 }
-.logo { 
+.logo {
   width: 10%;
   position: fixed;
   bottom: 2%;
@@ -22,20 +22,19 @@
 
 .location_input_container {
   width: 80%;
-  padding: 2% 0% ;
+  padding: 2% 0%;
   text-align: center;
-  margin: 5% 10%; 
+  margin: 5% 10%;
   border-radius: 10px;
 }
 
-.discription_title_container{
+.discription_title_container {
   font-family: "Arial Black", Gadget, sans-serif;
   font-size: 20px;
   position: fixed;
   right: 1.5%;
-
 }
-.discription_txt_container{
+.discription_txt_container {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
 }
@@ -46,26 +45,26 @@
   font-size: 30px;
   position: relative;
   top: 8%;
-  margin: 0 auto;  
+  margin: 0 auto;
   text-align: center;
 }
-.dis_value{
+.dis_value {
   font-family: "Arial Black", Gadget, sans-serif;
   font-size: 15px;
 }
-.date_filter{
+.date_filter {
   font-family: "Arial Black", Gadget, sans-serif;
   font-size: 15px;
-  margin: 0 auto;  
+  margin: 0 auto;
   text-align: right;
   position: relative;
   top: 10%;
   right: 10%;
 }
-.date_calander{
+.date_calander {
   font-family: "Arial Black", Gadget, sans-serif;
   font-size: 15px;
-  margin: 0 auto;  
+  margin: 0 auto;
   text-align: left;
   position: relative;
   top: 7.5%;
@@ -74,32 +73,33 @@
 #map {
   height: 100%;
 }
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
-.send_buton{
+.send_buton {
   width: 80%;
-  padding: 2% 0% ;
+  padding: 2% 0%;
   text-align: center;
-  margin: 0 auto;  
+  margin: 0 auto;
   border-radius: 10px;
   position: relative;
   top: 15%;
 }
 
-td,th{
+td,
+th {
   border: 1px solid #cccccc;
   padding: 8px;
   width: 80%;
- 
-  
 }
-.date_filter{
+.date_filter {
   width: 100%;
-  margin: 0 auto;  
+  margin: 0 auto;
   position: relative;
   top: 14%;
 }
+

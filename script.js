@@ -1,21 +1,20 @@
-import _, { sortBy, map } from "underscore";
 let all_donation_list = [
   {
-    date: "4/4/21",
+    date: "4/4/2021",
     address: "אמץ",
     startTime: "17:00",
     endTime: "19:00",
     dis: "100",
   },
   {
-    date: "20/4/21",
+    date: "20/4/2021",
     address: "בחן",
     startTime: "13:00",
     endTime: "15:00",
     dis: "100",
   },
   {
-    date: "7/4/21",
+    date: "7/4/2021",
     address: "בת חפר",
     startTime: "17:00",
     endTime: "19:30",
@@ -35,8 +34,8 @@ for (var i = 0; i < tableRows.length; i += 1) {
   // or attachEvent, depends on browser
 }
 function initMap() {
-  filterList();
-
+  // filterList(all_donation_list, (filterdList) => {
+  filterdList = all_donation_list;
   if (homeAddress == undefined) {
     homeAddress = getCurrentLocation();
   }
@@ -44,14 +43,15 @@ function initMap() {
     zoom: 13,
   });
   setPin(map, homeAddress, true, "הבית שלך");
-  for (let donation in filterd_donation_list) {
+  for (let donation in filterdList) {
     setPin(
       map,
-      filterd_donation_list[donation].address,
+      filterdList[donation].address,
       false,
-      setDescription(filterd_donation_list[donation])
+      setDescription(filterdList[donation])
     );
   }
+  // });
 }
 function translateCalanderDate(date) {
   var date = new Date(date);
@@ -72,7 +72,8 @@ function getDateFilters() {
 }
 function filterByDate(exact, list, date) {
   return _.filter(list, (e) => {
-    let calDate = new Date(e.date);
+    var dateParts = e.date.split("/");
+    var calDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
     let inRange =
       Math.abs(
         calDate.getDate() -
@@ -80,48 +81,51 @@ function filterByDate(exact, list, date) {
           10 * (calDate.getMonth() - date.getMonth()) +
           100 * (calDate.getYear() - date.getYear())
       ) <= 5;
-    return exact ? e.date == translateCalanderDate(date) : inRange;
+    return exact
+      ? translateCalanderDate(e.date) == translateCalanderDate(date)
+      : inRange;
   });
 }
-function filterList(list) {
-  return filterByDistance(
+function filterList(list, callback) {
+  filterByDistance(
     document.getElementById("disRange").value,
     filterByDate(
       getDateFilters() == "exact_date",
       list,
       new Date(document.getElementById("calander").value)
-    )
+    ),
+    (filtered) => callback(filtered)
   );
 }
-function filterList() {
-  filterd_donation_list = [];
-  var slider = document.getElementById("disRange").value;
-  var date = new Date(document.getElementById("calander").value);
-  if (getDateFilters() == "exact_date") {
-    for (let i in all_donation_list) {
-      if (
-        all_donation_list[i].date == translateCalanderDate(date) &&
-        parseInt(slider) < parseInt(all_donation_list[i].dis)
-      ) {
-        filterd_donation_list.splice(i, 1, all_donation_list[i]);
-      }
-    }
-  } else {
-    for (let i in all_donation_list) {
-      for (let j = 0; j < 5; j++) {
-        var tempDate = new Date(document.getElementById("calander").value);
-        if (
-          all_donation_list[i].date ==
-            translateCalanderDate(tempDate.setDate(tempDate.getDate() + j)) &&
-          parseInt(slider) < parseInt(all_donation_list[i].dis)
-        ) {
-          filterd_donation_list.splice(i, 1, all_donation_list[i]);
-          break;
-        }
-      }
-    }
-  }
-}
+// function filterList() {
+//   filterd_donation_list = [];
+//   var slider = document.getElementById("disRange").value;
+//   var date = new Date(document.getElementById("calander").value);
+//   if (getDateFilters() == "exact_date") {
+//     for (let i in all_donation_list) {
+//       if (
+//         all_donation_list[i].date == translateCalanderDate(date) &&
+//         parseInt(slider) < parseInt(all_donation_list[i].dis)
+//       ) {
+//         filterd_donation_list.splice(i, 1, all_donation_list[i]);
+//       }
+//     }
+//   } else {
+//     for (let i in all_donation_list) {
+//       for (let j = 0; j < 5; j++) {
+//         var tempDate = new Date(document.getElementById("calander").value);
+//         if (
+//           all_donation_list[i].date ==
+//             translateCalanderDate(tempDate.setDate(tempDate.getDate() + j)) &&
+//           parseInt(slider) < parseInt(all_donation_list[i].dis)
+//         ) {
+//           filterd_donation_list.splice(i, 1, all_donation_list[i]);
+//           break;
+//         }
+//       }
+//     }
+//   }
+// }
 function setDescription(donation) {
   let txt = `starting time:${donation.startTime} \n`;
   txt = txt + `end time: ${donation.endTime} \n`;
@@ -167,21 +171,18 @@ function updateTable() {
       table.deleteRow(i - 1);
     }
   }
-  for (index in filterd_donation_list) {
-    let date = filterd_donation_list[index].date;
-    let address = filterd_donation_list[index].address;
-    let startTime = filterd_donation_list[index].startTime;
-    let endTime = filterd_donation_list[index].endTime;
-    let dis = filterd_donation_list[index].dis;
-    rowCount = table.rows.length;
-    let row = table.insertRow(rowCount);
-    row.insertCell(0).innerHTML = rowCount;
-    row.insertCell(1).innerHTML = date;
-    row.insertCell(2).innerHTML = address;
-    row.insertCell(3).innerHTML = startTime;
-    row.insertCell(4).innerHTML = endTime;
-    row.insertCell(5).innerHTML = dis;
-  }
+  filterList(all_donation_list, (filteredList) => {
+    filteredList.forEach((element) => {
+      rowCount = table.rows.length;
+      let row = table.insertRow(rowCount);
+      row.insertCell(0).innerHTML = rowCount;
+      row.insertCell(1).innerHTML = findByAddress(element.address).date;
+      row.insertCell(2).innerHTML = findByAddress(element.address).address;
+      row.insertCell(3).innerHTML = findByAddress(element.address).startTime;
+      row.insertCell(4).innerHTML = findByAddress(element.address).endTime;
+      row.insertCell(5).innerHTML = element.distance;
+    });
+  });
 }
 function getRowIndex(marker) {
   filterList();
@@ -233,34 +234,34 @@ function markRow(index) {
   }
 }
 function getCurrentLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        // alert(pos.value);
-        return pos;
-      },
-      () => {}
-    );
-  }
+  // if (navigator.geolocation) {
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //       const pos = {
+  //         lat: position.coords.latitude,
+  //         lng: position.coords.longitude,
+  //       };
+  //       // alert(pos.value);
+  //       return pos;
+  //     },
+  //     () => {}
+  //   );
+  // }
   return "יד חנה";
 }
 function autoComplete() {
-  addressField = document.getElementById("location_input");
-  autocomplete_ = new google.maps.places.Autocomplete(addressField, {
+  let addressField = document.getElementById("location_input");
+  let autocomplete = new google.maps.places.Autocomplete(addressField, {
     componentRestrictions: { country: ["isr"] },
     fields: ["address_components", "geometry"],
-    types: ["address"],
+    types: [],
   });
   // autocomplete.addListener("place_changed", () => {
-  //   autocomplete.getPlace();
+  //   setPin(autocomplete.getPlace());
   // });
 }
-function calculateDistances(origin, destinations) {
-  let distances = [];
+function getDistances(origin, destinations, callback) {
+  var distances = [];
   let service = new google.maps.DistanceMatrixService(); //initialize the distance service
   let addresses = _.map(destinations, (dest) => dest.address);
   service.getDistanceMatrix(
@@ -276,21 +277,29 @@ function calculateDistances(origin, destinations) {
       if (status == google.maps.DistanceMatrixStatus.OK) {
         const elements = response.rows[0].elements;
         for (i = 0; i < elements.length; i++) {
-          distances[i] = {
+          distances.push({
             address: addresses[i],
-            distance: elements[i].distance.value,
-          };
+            distance: Number(elements[i].distance.value) / 1000,
+          });
         }
+        distances = _.sortBy(distances, (distance) => distance.distance);
+        callback(distances);
       }
     }
   );
-  distances = _.sortBy(distances, (distance) => distance.distance);
-  return distances;
 }
 
-function filterByDistance(max, destinations) {
+function filterByDistance(max, destinations, callback) {
+  getDistances(homeAddress, destinations, (distances) => {
+    var filtered = _.filter(distances, (dist) => Number(dist.distance) <= max);
+    console.log(filtered);
+    callback(filtered);
+  });
+}
+
+function findByAddress(address) {
   return _.filter(
-    calculateDistances(homeAddress, destinations),
-    (dist) => dist.distance <= max
-  );
+    all_donation_list,
+    (element) => element.address == address
+  )[0];
 }
