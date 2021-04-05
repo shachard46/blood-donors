@@ -1,4 +1,3 @@
-import _, { sortBy, map } from "underscore";
 let all_donation_list = [
   {
     date: "4/4/21",
@@ -31,7 +30,7 @@ let date_radio;
 var tableRows = document.getElementsByTagName("myTableData");
 
 for (var i = 0; i < tableRows.length; i += 1) {
-  tableRows[i].addEventListener("mouseover", function (e) {});
+  tableRows[i].addEventListener("mouseover", function (e) { });
   // or attachEvent, depends on browser
 }
 function initMap() {
@@ -76,9 +75,9 @@ function filterByDate(exact, list, date) {
     let inRange =
       Math.abs(
         calDate.getDate() -
-          date.getDate() +
-          10 * (calDate.getMonth() - date.getMonth()) +
-          100 * (calDate.getYear() - date.getYear())
+        date.getDate() +
+        10 * (calDate.getMonth() - date.getMonth()) +
+        100 * (calDate.getYear() - date.getYear())
       ) <= 5;
     return exact ? e.date == translateCalanderDate(date) : inRange;
   });
@@ -112,7 +111,7 @@ function filterList() {
         var tempDate = new Date(document.getElementById("calander").value);
         if (
           all_donation_list[i].date ==
-            translateCalanderDate(tempDate.setDate(tempDate.getDate() + j)) &&
+          translateCalanderDate(tempDate.setDate(tempDate.getDate() + j)) &&
           parseInt(slider) < parseInt(all_donation_list[i].dis)
         ) {
           filterd_donation_list.splice(i, 1, all_donation_list[i]);
@@ -204,10 +203,10 @@ function getRGB(str) {
   );
   return match
     ? {
-        red: match[1],
-        green: match[2],
-        blue: match[3],
-      }
+      red: match[1],
+      green: match[2],
+      blue: match[3],
+    }
     : {};
 }
 function componentToHex(c) {
@@ -243,7 +242,7 @@ function getCurrentLocation() {
         // alert(pos.value);
         return pos;
       },
-      () => {}
+      () => { }
     );
   }
   return "יד חנה";
