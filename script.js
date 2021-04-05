@@ -1,3 +1,4 @@
+import _, { sortBy, map } from "underscore";
 let all_donation_list = [
   {
     date: "4/4/21",
@@ -27,11 +28,10 @@ let geocoder;
 let map;
 let homeAddress;
 let date_radio;
-var tableRows = document.getElementsByTagName('myTableData');
+var tableRows = document.getElementsByTagName("myTableData");
 
 for (var i = 0; i < tableRows.length; i += 1) {
-  tableRows[i].addEventListener('mouseover', function (e) {
-  });
+  tableRows[i].addEventListener("mouseover", function (e) {});
   // or attachEvent, depends on browser
 }
 function initMap() {
@@ -52,18 +52,17 @@ function initMap() {
       setDescription(filterd_donation_list[donation])
     );
   }
-
 }
 function translateCalanderDate(date) {
   var date = new Date(date);
   var day = date.getDate();
   var month = date.getMonth() + 1;
   var year = date.getYear() - 100;
-  var newDate = [day, month, year].join('/');
+  var newDate = [day, month, year].join("/");
   return newDate;
 }
 function getDateFilters() {
-  var ele = document.getElementsByName('radio_date');
+  var ele = document.getElementsByName("radio_date");
   for (i = 0; i < ele.length; i++) {
     if (ele[i].checked) {
       let x = ele[i].value;
@@ -71,27 +70,55 @@ function getDateFilters() {
     }
   }
 }
+function filterByDate(exact, list, date) {
+  return _.filter(list, (e) => {
+    let calDate = new Date(e.date);
+    let inRange =
+      Math.abs(
+        calDate.getDate() -
+          date.getDate() +
+          10 * (calDate.getMonth() - date.getMonth()) +
+          100 * (calDate.getYear() - date.getYear())
+      ) <= 5;
+    return exact ? e.date == translateCalanderDate(date) : inRange;
+  });
+}
+function filterList(list) {
+  return filterByDistance(
+    document.getElementById("disRange").value,
+    filterByDate(
+      getDateFilters() == "exact_date",
+      list,
+      new Date(document.getElementById("calander").value)
+    )
+  );
+}
 function filterList() {
   filterd_donation_list = [];
   var slider = document.getElementById("disRange").value;
   var date = new Date(document.getElementById("calander").value);
   if (getDateFilters() == "exact_date") {
     for (let i in all_donation_list) {
-      if (all_donation_list[i].date == translateCalanderDate(date) && parseInt(slider) < parseInt(all_donation_list[i].dis)) {
+      if (
+        all_donation_list[i].date == translateCalanderDate(date) &&
+        parseInt(slider) < parseInt(all_donation_list[i].dis)
+      ) {
         filterd_donation_list.splice(i, 1, all_donation_list[i]);
       }
     }
-  }
-  else {
+  } else {
     for (let i in all_donation_list) {
       for (let j = 0; j < 5; j++) {
         var tempDate = new Date(document.getElementById("calander").value);
-        if (all_donation_list[i].date == translateCalanderDate(tempDate.setDate(tempDate.getDate() + j)) && parseInt(slider) < parseInt(all_donation_list[i].dis)) {
+        if (
+          all_donation_list[i].date ==
+            translateCalanderDate(tempDate.setDate(tempDate.getDate() + j)) &&
+          parseInt(slider) < parseInt(all_donation_list[i].dis)
+        ) {
           filterd_donation_list.splice(i, 1, all_donation_list[i]);
-          break
+          break;
         }
       }
-
     }
   }
 }
@@ -130,9 +157,7 @@ function setPin(map, Adreess, home, description) {
     } else {
       alert("Geocode was not successful for the following reason: " + status);
     }
-
   });
-
 }
 function updateTable() {
   let table = document.getElementById("myTableData");
@@ -156,7 +181,6 @@ function updateTable() {
     row.insertCell(3).innerHTML = startTime;
     row.insertCell(4).innerHTML = endTime;
     row.insertCell(5).innerHTML = dis;
-
   }
 }
 function getRowIndex(marker) {
@@ -170,17 +194,21 @@ function getRowIndex(marker) {
   }
 }
 function clickMarker(marker) {
-  google.maps.event.addListener(marker, 'click', function () {
+  google.maps.event.addListener(marker, "click", function () {
     markRow(getRowIndex(marker));
   });
 }
 function getRGB(str) {
-  var match = str.match(/rgba?\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)?(?:, ?(\d(?:\.\d?))\))?/);
-  return match ? {
-    red: match[1],
-    green: match[2],
-    blue: match[3]
-  } : {};
+  var match = str.match(
+    /rgba?\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)?(?:, ?(\d(?:\.\d?))\))?/
+  );
+  return match
+    ? {
+        red: match[1],
+        green: match[2],
+        blue: match[3],
+      }
+    : {};
 }
 function componentToHex(c) {
   var hex = c.toString(16);
@@ -192,20 +220,17 @@ function rgbToHex(r, g, b) {
 function markRow(index) {
   let table = document.getElementById("myTableData");
   var rows = table.getElementsByTagName("tr");
-  let redbackgroundColor = '#8A0303';
-  let secColor = '#ffffff';
-  var rgb = (rows[index].style.backgroundColor);
+  let redbackgroundColor = "#8A0303";
+  let secColor = "#ffffff";
+  var rgb = rows[index].style.backgroundColor;
   let r = parseInt(getRGB(rgb).red);
   let g = parseInt(getRGB(rgb).green);
   let b = parseInt(getRGB(rgb).blue);
   if (rgbToHex(r, g, b) == secColor) {
     table.rows[index].style.backgroundColor = redbackgroundColor;
-  }
-  else {
+  } else {
     table.rows[index].style.backgroundColor = secColor;
   }
-
-
 }
 function getCurrentLocation() {
   if (navigator.geolocation) {
@@ -218,7 +243,7 @@ function getCurrentLocation() {
         // alert(pos.value);
         return pos;
       },
-      () => { }
+      () => {}
     );
   }
   return "יד חנה";
@@ -226,7 +251,7 @@ function getCurrentLocation() {
 function autoComplete() {
   addressField = document.getElementById("location_input");
   autocomplete_ = new google.maps.places.Autocomplete(addressField, {
-    componentRestrictions: { country: ["israel"] },
+    componentRestrictions: { country: ["isr"] },
     fields: ["address_components", "geometry"],
     types: ["address"],
   });
@@ -235,12 +260,13 @@ function autoComplete() {
   // });
 }
 function calculateDistances(origin, destinations) {
-  let durations = [];
+  let distances = [];
   let service = new google.maps.DistanceMatrixService(); //initialize the distance service
+  let addresses = _.map(destinations, (dest) => dest.address);
   service.getDistanceMatrix(
     {
       origins: [origin], //set origin, you can specify multiple sources here
-      destinations: destinations, //set destination, you can specify multiple destinations here
+      destinations: addresses, //set destination, you can specify multiple destinations here
       travelMode: google.maps.TravelMode.DRIVING, //set the travelmode
       unitSystem: google.maps.UnitSystem.METRIC, //The unit system to use when displaying distance
       avoidHighways: false,
@@ -250,13 +276,21 @@ function calculateDistances(origin, destinations) {
       if (status == google.maps.DistanceMatrixStatus.OK) {
         const elements = response.rows[0].elements;
         for (i = 0; i < elements.length; i++) {
-          durations[i] = {
-            address: destinations[i],
-            duration: elements[i].duration.value,
+          distances[i] = {
+            address: addresses[i],
+            distance: elements[i].distance.value,
           };
         }
       }
     }
   );
-  return durations;
+  distances = _.sortBy(distances, (distance) => distance.distance);
+  return distances;
+}
+
+function filterByDistance(max, destinations) {
+  return _.filter(
+    calculateDistances(homeAddress, destinations),
+    (dist) => dist.distance <= max
+  );
 }
