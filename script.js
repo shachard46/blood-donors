@@ -83,16 +83,16 @@ function filterByDate(exact, list, date) {
     return exact ? e.date == translateCalanderDate(date) : inRange;
   });
 }
-function filterList(list) {
-  return filterByDistance(
-    document.getElementById("disRange").value,
-    filterByDate(
-      getDateFilters() == "exact_date",
-      list,
-      new Date(document.getElementById("calander").value)
-    )
-  );
-}
+// function filterList(list) {
+//   return filterByDistance(
+//     document.getElementById("disRange").value,
+//     filterByDate(
+//       getDateFilters() == "exact_date",
+//       list,
+//       new Date(document.getElementById("calander").value)
+//     )
+//   );
+// }
 function filterList() {
   filterd_donation_list = [];
   var slider = document.getElementById("disRange").value;
