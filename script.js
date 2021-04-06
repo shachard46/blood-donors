@@ -4,21 +4,18 @@ let all_donation_list = [
     address: "אמץ",
     startTime: "17:00",
     endTime: "19:00",
-    dis: "100",
   },
   {
     date: "20/4/2021",
     address: "בחן",
     startTime: "13:00",
     endTime: "15:00",
-    dis: "100",
   },
   {
     date: "7/4/2021",
     address: "בת חפר",
     startTime: "17:00",
     endTime: "19:30",
-    dis: "100",
   },
 ];
 let filterd_donation_list = [];
@@ -97,11 +94,22 @@ function filterList(list, callback) {
     (filtered) => callback(filtered)
   );
 }
+function getAdressFromPin(marker) {
+  let str = marker.getTitle();
+  for (var i = 7; i < str.length; i++) {
 
+  }
+  var i = 7;
+  while (str[i] != 'ש') {
+    i++;
+  }
+  var res = str.slice(7, i - 1);
+  return res;
+}
 function setDescription(donation) {
-  let txt = `starting time:${donation.startTime} \n`;
-  txt = txt + `end time: ${donation.endTime} \n`;
-  txt = txt + `location: ${donation.address}`;
+  let txt = `מיקום: ${donation.address}\n`;
+  txt = txt + `שעת התחלה: ${donation.startTime} \n`;
+  txt = txt + `שעת סיום: ${donation.endTime} \n`;
   return txt;
 }
 function SetHomeAddress(Adreess) {
@@ -157,18 +165,32 @@ function updateTable() {
   });
 }
 function getRowIndex(marker) {
-  filterList();
-  var markerTitel = marker.getTitle();
-  for (var i = 0; i < filterd_donation_list.length; i++) {
-    var listTitel = setDescription(filterd_donation_list[i]);
-    if (markerTitel == listTitel) {
-      return i + 1;
-    }
-  }
+  // filterList();
+  // // var markerTitel = marker.getTitle();
+  // for (var i = 0; i < all_donation_list.length; i++) {
+  //   // console.log(findByAddress(element.address).address);
+  //   // if (markerTitel == listTitel) {
+  //   //   return i + 1;
+  //   // }
+  // }
+  var i = 1;
+  filterList(all_donation_list, (filteredList) => {
+    filteredList.forEach((element) => {
+      if (findByAddress(element.address).address == getAdressFromPin(marker)) {
+        console.log(findByAddress(element.address).address);
+        console.log(i);
+        return markRow(i);
+      }
+      else {
+        i++;
+      }
+    });
+  });
 }
 function clickMarker(marker) {
   google.maps.event.addListener(marker, "click", function () {
-    markRow(getRowIndex(marker));
+    (getRowIndex(marker));
+    //markRow
   });
 }
 function getRGB(str) {
@@ -193,7 +215,7 @@ function rgbToHex(r, g, b) {
 function markRow(index) {
   let table = document.getElementById("myTableData");
   var rows = table.getElementsByTagName("tr");
-  let redbackgroundColor = "#8A0303";
+  let redbackgroundColor = "#C4141D";
   let secColor = "#ffffff";
   var rgb = rows[index].style.backgroundColor;
   let r = parseInt(getRGB(rgb).red);
@@ -204,6 +226,7 @@ function markRow(index) {
   } else {
     table.rows[index].style.backgroundColor = secColor;
   }
+
 }
 function getCurrentLocation() {
   // if (navigator.geolocation) {
@@ -260,7 +283,13 @@ function getDistances(origin, destinations, callback) {
     }
   );
 }
-
+function addKM(list) {
+  for (let i = 0; i < list.length; i++) {
+    list[i].distance = list[i].distance + "km";
+  }
+  console.log(list);
+  return list;
+}
 function filterByDistance(max, destinations, callback) {
   getDistances(homeAddress, destinations, (distances) => {
     var filtered = _.filter(distances, (dist) => Number(dist.distance) <= max);
