@@ -17,6 +17,42 @@ let all_donation_list = [
     startTime: "17:00",
     endTime: "19:30",
   },
+  {
+    date: "7/4/2021",
+    address: "בת חגגפר",
+    startTime: "17:00",
+    endTime: "19:30",
+  },
+  {
+    date: "7/4/2021",
+    address: "בת עחפר",
+    startTime: "17:00",
+    endTime: "19:30",
+  },
+  {
+    date: "7/4/2021",
+    address: "בת חכפר",
+    startTime: "17:00",
+    endTime: "19:30",
+  },
+  {
+    date: "7/4/2021",
+    address: "בת חגפר",
+    startTime: "17:00",
+    endTime: "19:30",
+  },
+  {
+    date: "7/4/2021",
+    address: "בת חפדר",
+    startTime: "17:00",
+    endTime: "19:30",
+  },
+  {
+    date: "7/4/2021",
+    address: "בת דחפר",
+    startTime: "17:00",
+    endTime: "19:30",
+  },
 ];
 let filterd_donation_list = [];
 let dis_list = [];
@@ -59,13 +95,10 @@ function translateCalanderDate(date) {
   return newDate;
 }
 function getDateFilters() {
-  var ele = document.getElementsByName("radio_date");
-  for (i = 0; i < ele.length; i++) {
-    if (ele[i].checked) {
-      let x = ele[i].value;
-      return x;
-    }
-  }
+  var e = document.getElementById("selectList");
+  var strUser = e.value;
+  console.log(strUser);
+  return strUser;
 }
 function filterByDate(exact, list, date) {
   return _.filter(list, (e) => {
@@ -87,9 +120,9 @@ function filterList(list, callback) {
   filterByDistance(
     document.getElementById("disRange").value,
     filterByDate(
-      getDateFilters() == "exact_date",
+      getDateFilters() == "תאריך מדוייק",
       list,
-      new Date(document.getElementById("calander").value)
+      new Date(document.getElementById("date").value)
     ),
     (filtered) => callback(filtered)
   );
@@ -155,24 +188,15 @@ function updateTable() {
     filteredList.forEach((element) => {
       rowCount = table.rows.length;
       let row = table.insertRow(rowCount);
-      row.insertCell(0).innerHTML = rowCount;
-      row.insertCell(1).innerHTML = findByAddress(element.address).date;
-      row.insertCell(2).innerHTML = findByAddress(element.address).address;
-      row.insertCell(3).innerHTML = findByAddress(element.address).startTime;
-      row.insertCell(4).innerHTML = findByAddress(element.address).endTime;
-      row.insertCell(5).innerHTML = element.distance;
+      row.insertCell(0).innerHTML = findByAddress(element.address).date;
+      row.insertCell(1).innerHTML = findByAddress(element.address).address;
+      row.insertCell(2).innerHTML = findByAddress(element.address).startTime + "-" + findByAddress(element.address).endTime;
+      row.insertCell(3).innerHTML = element.distance;
     });
   });
 }
 function getRowIndex(marker) {
-  // filterList();
-  // // var markerTitel = marker.getTitle();
-  // for (var i = 0; i < all_donation_list.length; i++) {
-  //   // console.log(findByAddress(element.address).address);
-  //   // if (markerTitel == listTitel) {
-  //   //   return i + 1;
-  //   // }
-  // }
+
   var i = 1;
   filterList(all_donation_list, (filteredList) => {
     filteredList.forEach((element) => {
@@ -215,14 +239,14 @@ function rgbToHex(r, g, b) {
 function markRow(index) {
   let table = document.getElementById("myTableData");
   var rows = table.getElementsByTagName("tr");
-  let redbackgroundColor = "#C4141D";
-  let secColor = "#ffffff";
+  let MainbackgroundColor = "#e5e3e3";
+  let secColor = "#c4131d";
   var rgb = rows[index].style.backgroundColor;
   let r = parseInt(getRGB(rgb).red);
   let g = parseInt(getRGB(rgb).green);
   let b = parseInt(getRGB(rgb).blue);
   if (rgbToHex(r, g, b) == secColor) {
-    table.rows[index].style.backgroundColor = redbackgroundColor;
+    table.rows[index].style.backgroundColor = MainbackgroundColor;
   } else {
     table.rows[index].style.backgroundColor = secColor;
   }

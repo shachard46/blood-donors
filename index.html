@@ -1,84 +1,87 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-<!-- api key => AIzaSyAn-e1Drb9Xo7lq-yjrFbtOOzLQEX5XATs -->
 
 <head>
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/underscore@1.12.1/underscore-min.js"></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAn-e1Drb9Xo7lq-yjrFbtOOzLQEX5XATs&libraries=places&,geometry&callback=initMap"></script>
+    <style>
+
+    </style>
 </head>
 
 <body>
-    <div class="row">
-        <div class="form_container">
-            <img src="./img/LogoV3.png" class="logo">
-            <input type="text" placeholder="איפה אתה גר?" class="location_input_container" id="location_input"
+    <div class="filters_container">
+        <div class="divWrapFilter">
+            <h3 class="discription">מלא את הפרטים בטופס, כדי שנמצא עבורך את מיקום תרומת הדם
+                המתאימה לך ביותר</h3>
+            <input id="location_input" class="inputAdress" type="text" name="search" placeholder="איפה אתה גר?"
                 onfocus="autoComplete()" onchange="autoComplete()">
-            <div class="discription_title_container">
-                <main><span>מה חשוב לך?</span></main>
-                <div class="discription_txt_container">
-                    <article><span>ניתן לבחור מתוך האפשרויות הבאות,</span></article>
-                    <article><span>כל בחירה תסנן את התוצאות</span> </article>
-                </div>
-            </div>
-            <div class="max_distance_container">
-                <article><span>max distance</span> </article>
-                <div class="slidecontainer">
-                    <div class="slider_container">
-                        <span class="dis_value" id="Value"></span>
-                        <input type="range" min="1" max="100" value="50" class="slider" id="disRange" dir="ltr">
-                    </div>
-                    <script>
-                        var slider = document.getElementById("disRange");
-                        var output = document.getElementById("Value");
-                        output.innerHTML = slider.value;
-                        slider.oninput = function () {
-                            output.innerHTML = this.value;
-                        }
-                    </script>
-                </div>
-            </div>
-            <div class="date_filter">
-                <input type="radio" name="radio_date" value="exact_date">
-                <label for="exact_date">תאריך מדויק</label><br>
-                <input type="radio" name="radio_date" value="Range_of_dates">
-                <label for="Range_of_dates">טווח תאריכים</label><br>
-            </div>
-            <div class="date_calander">
-                <input type="date" name="date" id="calander">
-            </div>
-            <div class="send_buton">
-                <button type="button" onClick=getVal()>סנן תוצאות</button>
-                <script>
-                    function getVal() {
-                        var txt = document.getElementById("location_input").value;
-                        SetHomeAddress(txt);
-                        updateTable();
-                    }
 
+            <!-- Slider -->
+            <div class="sliderDiscription">
+                <br><br> <!-- line break -->
+                מרחק מקסימלי מהכתובת שלך - <span id="DisValue"></span>
+                <br><br> <!-- line break -->
+                <input type="range" min="1" max="100" value="30" class="slider center-block" id="disRange" dir="ltr">
+                <script>
+                    var slider = document.getElementById("disRange");
+                    var output = document.getElementById("DisValue");
+                    output.innerHTML = slider.value + ` ק"מ`;
+                    slider.oninput = function () {
+                        output.innerHTML = this.value + ` ק"מ`;
+                    }
                 </script>
-                <table id="myTableData"   border="1" cellpadding="2">
+                <br><br> <!-- line break -->
+
+                <!-- date -->
+                <input type="date" class="inputDate" id="date">
+                <select class="inputSelect" required="required" aria-required="true" name="select" id="selectList">
+                    <option value="">בחר טווח תאריכים</option>
+                    <option value="תאריך מדוייק">תאריך מדוייק</option>
+                    <option value="+- 5 ימים">+- 5 ימים</option>
+                </select>
+                <br><br> <!-- line break -->
+
+                <button type="submit" class="filterButton" onClick=getVal()>
+                    <span>סינון</span>
+                    <script>
+                        function getVal() {
+                            var txt = document.getElementById("location_input").value;
+                            SetHomeAddress(txt);
+                            updateTable();
+                        }
+
+                    </script>
+                </button>
+                <br><br> <!-- line break -->
+                <br><br> <!-- line break -->
+
+                <p class="discription">תוצאות הסינון:</p>
+                <table id="myTableData" cellspacing="0" cellpadding="0" width="300">
                     <tr>
-                        <!-- onclick="changeColor(this)" -->
-                        <th><b>-</b></th>
                         <th><b>תאריך</b></th>
-                        <th><b>כתובת</b></th>
-                        <th><b>זמן התחלה</b></th>
-                        <th><b>זמן סיום</b></th>
-                        <th><b>מרחק</b></th>
+                        <th><b>מיקום</b></th>
+                        <th><b>זמן</b></th>
+                        <th><b>קירבה</b></th>
                     </tr>
 
                 </table>
+                <img src="./img/LogoV3.png" class="logo">
 
             </div>
-
         </div>
+    </div>
+
+    <div class="map_container">
         <div id="map" class="map_container"></div>
     </div>
+
+
 
 </body>
 

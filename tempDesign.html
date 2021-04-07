@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<!-- api key => AIzaSyAn-e1Drb9Xo7lq-yjrFbtOOzLQEX5XATs -->
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8" />
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <div class="row">
+        <div class="form_container">
+            <input type="text" placeholder="איפה אתה גר?" class="location_input_container" id="location_input"
+                onfocus="autoComplete()" onchange="autoComplete()">
+            <div class="discription_title_container">
+                <main><span>מה חשוב לך?</span></main>
+                <div class="discription_txt_container">
+                    <article><span>ניתן לבחור מתוך האפשרויות הבאות,</span></article>
+                    <article><span>כל בחירה תסנן את התוצאות</span> </article>
+                </div>
+            </div>
+            <div class="max_distance_container">
+                <article><span>max distance</span> </article>
+                <div class="slidecontainer">
+                    <div class="slider_container">
+                        <span class="dis_value" id="Value"></span>
+                        <input type="range" min="1" max="100" value="50" class="slider" id="disRange" dir="ltr">
+                    </div>
+                </div>
+            </div>
+            <div class="date_filter">
+                <input type="radio" name="radio_date" value="exact_date">
+                <label for="exact_date">תאריך מדויק</label><br>
+                <input type="radio" name="radio_date" value="Range_of_dates">
+                <label for="Range_of_dates">טווח תאריכים</label><br>
+            </div>
+            <div class="date_calander">
+                <input type="date" name="date" id="calander">
+            </div>
+            <div class="send_buton">
+                <button type="button" onClick=getVal()>סנן תוצאות</button>
+                <table id="myTableData"   border="1" cellpadding="2">
+                    <tr>
+                        <th><b>-</b></th>
+                        <th><b>תאריך</b></th>
+                        <th><b>כתובת</b></th>
+                        <th><b>זמן התחלה</b></th>
+                        <th><b>זמן סיום</b></th>
+                        <th><b>מרחק</b></th>
+                    </tr>
+
+                </table>
+
+            </div>
+            <img src="./img/LogoV3.png" class="logo">
+        </div>
+    </div>
+
+</body>
+
+</html>
