@@ -11,6 +11,9 @@ body {
   top: 0;
   overflow-x: hidden;
   left: 0;
+  border-style: solid;
+  border-width: 0px 3px 0px 0px;
+  border-color: #C4131D;
 }
 
 #map {
@@ -24,9 +27,7 @@ body {
   height: 100%;
   width: 25%;
   position: fixed;
-  border-style: solid;
-  border-width: 0px 0px 4px 0px;
-  border-color: #C4131D;
+
 }
 
 .divWrapFilter {
