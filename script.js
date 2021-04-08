@@ -19,21 +19,21 @@ let all_donation_list = [
   },
   {
     date: "7/4/2021",
-    address: "בת חגגפר",
+    address: "גבעת חיים איחוד",
     startTime: "17:00",
+    endTime: "20:30",
+  },
+  {
+    date: "7/4/2021",
+    address: "המעפיל",
+    startTime: "16:00",
     endTime: "19:30",
   },
   {
     date: "7/4/2021",
-    address: "בת עחפר",
-    startTime: "17:00",
-    endTime: "19:30",
-  },
-  {
-    date: "7/4/2021",
-    address: "בת חכפר",
-    startTime: "17:00",
-    endTime: "19:30",
+    address: "עין החורש",
+    startTime: "9:00",
+    endTime: "13:30",
   },
   {
     date: "7/4/2021",
@@ -43,15 +43,15 @@ let all_donation_list = [
   },
   {
     date: "7/4/2021",
-    address: "בת חפדר",
-    startTime: "17:00",
-    endTime: "19:30",
+    address: "אביחיל",
+    startTime: "13:00",
+    endTime: "15:30",
   },
   {
     date: "7/4/2021",
-    address: "בת דחפר",
-    startTime: "17:00",
-    endTime: "19:30",
+    address: "אביחיל",
+    startTime: "10:00",
+    endTime: "16:30",
   },
 ];
 let filterd_donation_list = [];
@@ -177,7 +177,7 @@ function setPin(map, Adreess, home, description) {
   });
 }
 function updateTable() {
-  let table = document.getElementById("myTableData");
+  let table = document.getElementById("donationTable");
   let rowCount = table.rows.length;
   if (rowCount > 1) {
     for (let i = rowCount; i > 1; i--) {
