@@ -18,6 +18,12 @@ let all_donation_list = [
     endTime: "19:30",
   },
   {
+    date: "8/4/2021",
+    address: "בת חפר",
+    startTime: "17:00",
+    endTime: "19:30",
+  },
+  {
     date: "7/4/2021",
     address: "גבעת חיים איחוד",
     startTime: "17:00",
@@ -191,7 +197,7 @@ function updateTable() {
       row.insertCell(0).innerHTML = findByAddress(element.address).date;
       row.insertCell(1).innerHTML = findByAddress(element.address).address;
       row.insertCell(2).innerHTML = findByAddress(element.address).startTime + "-" + findByAddress(element.address).endTime;
-      row.insertCell(3).innerHTML = element.distance;
+      row.insertCell(3).innerHTML = (parseFloat(element.distance).toFixed(1)).toString() + ` ק"מ`;
     });
   });
 }
@@ -327,4 +333,15 @@ function findByAddress(address) {
     all_donation_list,
     (element) => element.address == address
   )[0];
+}
+
+function openNav() {
+  document.getElementById("map").style.width = "0";
+  document.getElementById("myNav").style.width = "100%";
+}
+
+function closeNav() {
+  document.getElementById("myNav").style.width = "0%";
+  document.getElementById("map").style.width = "100%";
+
 }
