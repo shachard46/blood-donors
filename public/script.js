@@ -277,7 +277,7 @@ function findByAddressAndDate(address, date) {
 }
 
 function readFromFile() {
-  $.getJSON("a.json", (data) => (all_donation_list = data));
+  $.getJSON("../donations.json", (data) => (all_donation_list = data));
 }
 function openNav() {
   document.getElementById("map").style.width = "0";
