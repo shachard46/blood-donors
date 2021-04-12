@@ -1,4 +1,5 @@
 let all_donation_list = [];
+readFromFile();
 let filterd_donation_list = [];
 let dis_list = [];
 let geocoder;
@@ -126,6 +127,7 @@ function updateTable() {
     }
   }
   filterList(all_donation_list, (filteredList) => {
+    console.log("filtered list: ", filteredList);
     filteredList.forEach((element) => {
       rowCount = table.rows.length;
       let row = table.insertRow(rowCount);
@@ -274,6 +276,9 @@ function findByAddressAndDate(address, date) {
   )[0];
 }
 
+function readFromFile() {
+  $.getJSON("a.json", (data) => (all_donation_list = data));
+}
 function openNav() {
   document.getElementById("map").style.width = "0";
   document.getElementById("myNav").style.width = "100%";
@@ -282,9 +287,4 @@ function openNav() {
 function closeNav() {
   document.getElementById("myNav").style.width = "0%";
   document.getElementById("map").style.width = "100%";
-}
-function readFromFile() {
-  $.getJSON("file:///Users/shachardavid/projects/blood-donors/a.json", (data) =>
-    console.log(data)
-  );
 }
