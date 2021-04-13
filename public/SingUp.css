@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  text-align: center;
+
+}
+/* Control the left side */
+.side_container {
+  /* left: 0; */
+  background-color: #fff;
+  height: 100%;
+  width: 25%;
+  position: fixed;
+}
+
+
+/* Control the right side */
+.singUp_container {
+  padding-top: 10%;
+  right: 25%;
+  background-color: #e5e3e3;
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  border-right: 3px solid #c4131d;
+  border-left: 3px solid #c4131d;
+
+
+}
+
+
+.inputText {
+  width: 45%;
+  box-sizing: border-box;
+  border: 1px solid #c4131d;
+  border-radius: 5px;
+  font-size: 100%;
+  background-color: #e5e3e3;
+  padding: 1% 5% 1% 5%;
+  height: 50px;
+  font-family: "Roboto", Sans-serif;
+}
+.inputDate {
+  width: 45%;
+  border: 1px solid #c4131d;
+  border-radius: 5px;
+  font-size: 100%;
+  background-color: #e5e3e3;
+  padding: .75em;
+  text-align: center;
+  font-family: "Roboto", Sans-serif;
+
+}
+.sendButton {
+  background-color: #e5e3e3;
+  color: #c4131d;
+  font-family: "Roboto", Sans-serif;
+  font-weight: 600;
+  border: 2px solid #c4131d;
+  font-size: 15px;
+  padding: 12px 24px;
+  border-radius: 5px;
+}
+.sendButton:hover {
+  background-color: #c4131d;
+  color: #ffffff;
+  border-color: #c4131d;
+}
+.text {
+  color: #000000;
+  font-family: "Roboto", Sans-serif;
+  /* font-size: 15px; */
+  /* text-align: right; */
+}
+
+  
+.logo {
+  width: 10%;
+  position: fixed;
+  bottom: -3%;
+  left: 25%;
+}
