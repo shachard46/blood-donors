@@ -50,7 +50,7 @@ body {
   font-family: "Roboto", Sans-serif;
 
 }
-.sendButton {
+.Button {
   background-color: #e5e3e3;
   color: #c4131d;
   font-family: "Roboto", Sans-serif;
@@ -60,7 +60,7 @@ body {
   padding: 12px 24px;
   border-radius: 5px;
 }
-.sendButton:hover {
+.Button:hover {
   background-color: #c4131d;
   color: #ffffff;
   border-color: #c4131d;
@@ -78,4 +78,10 @@ body {
   position: fixed;
   bottom: -3%;
   left: 25%;
+}
+.return {
+  width: 10%;
+  position: fixed;
+  bottom: 2%;
+  right: 27%;
 }

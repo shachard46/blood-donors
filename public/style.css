@@ -123,7 +123,7 @@ body {
 
 }
 
-.filterButton {
+.Button {
   background-color: #e5e3e3;
   color: #c4131d;
   font-family: "Roboto", Sans-serif;
@@ -135,7 +135,7 @@ body {
   float: left;
 }
 
-.filterButton:hover {
+.Button:hover {
   background-color: #c4131d;
   color: #ffffff;
   border-color: #c4131d;
@@ -188,4 +188,10 @@ td {
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px #c4131d; 
+}
+.return {
+  width: 10%;
+  position: fixed;
+  bottom: 4%;
+  right: 1%;
 }
