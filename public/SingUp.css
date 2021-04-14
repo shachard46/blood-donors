@@ -46,7 +46,7 @@ body {
   font-size: 100%;
   background-color: #e5e3e3;
   padding: .75em;
-  text-align: center;
+  text-align: left;
   font-family: "Roboto", Sans-serif;
 
 }
@@ -84,4 +84,17 @@ body {
   position: fixed;
   bottom: 2%;
   right: 27%;
+}
+.label {
+  color: #000000;
+  font-family: "Roboto", Sans-serif;
+}
+input[type="date"]:before {
+  content: attr(placeholder) !important;
+  color: #aaa;
+  /* margin-right: 2em; */
+}
+input[type="date"]:focus:before,
+input[type="date"]:valid:before {
+  content: "";
 }
