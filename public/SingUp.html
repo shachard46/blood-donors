@@ -31,7 +31,7 @@
             מלאו את הפרטים וקבלו התראות </h3>
         <br><br> <!-- line break -->
 
-        <form>
+        <form action="/users" method="POST">
 
             <input class="inputText" type="text" placeholder="שם פרטי">
             <input class="inputText" type="text" placeholder="שם משפחה">
@@ -49,8 +49,8 @@
             <!-- <input class="inputDate" type="date"> -->
             <br><br> <!-- line break -->
 
-            <input class="inputText" type="email" placeholder="מייל">
-            <input class="inputText" type="text" placeholder="מספר טלפון">
+            <input class="inputText" name="mail" type="email" placeholder="מייל">
+            <input class="inputText" name="phone_number" type="text" placeholder="מספר טלפון">
             <br><br> <!-- line break -->
             <h3 class="text">על ידי לחיצה על ההרשמה אתם מאשרים לקבל מידע פרסומי ומאשרים שימוש בנתונים לשיפור המערכת</h3>
             <button class="Button" type="submit">הרשמה</button>
