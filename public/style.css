@@ -161,8 +161,8 @@ th {
   border: 1px solid #c4131d;
 }
 td {
-  /* border-right: 1px solid #c4131d;
-  border-left: 1px solid #c4131d;  */
+  border-right: 1px solid #c4131d;
+  border-left: 1px solid #c4131d; 
   border-bottom: 1px solid #c4131d; 
     /* border: 1px solid #c4131d; */
 

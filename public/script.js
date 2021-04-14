@@ -140,8 +140,8 @@ function updateTable() {
   let table = document.getElementById("donationTable");
   let rowCount = table.rows.length;
   console.log(rowCount);
-  if (rowCount > 0) {
-    for (let i = rowCount; i > 0; i--) {
+  if (rowCount > 1) {
+    for (let i = rowCount; i > 1; i--) {
       table.deleteRow(i - 1);
     }
   }
