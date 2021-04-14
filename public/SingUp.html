@@ -2,29 +2,51 @@
 <html lang="he" dir="rtl">
 
 <head>
-    <link rel="stylesheet" href="singUp.css">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ABO SingUp</title>
+    <link rel="stylesheet" href="SingUp.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script>
+        $(function () {
+            $("#datepicker").datepicker(
+                {
+                    dateFormat: "dd/mm/yy"
+                }
+            );
+        });
+    </script>
 </head>
 
 <body>
     <div class="side_container">
-        asdas
     </div>
     <div class="singUp_container">
 
         <h1 class="text">ברוכים הבאים ל - ABO</h1>
-        <h3 class="text">רוצים לקבל התראות אוטומטיות על התרמות באיזור שלכם בזמן הנכון?
+        <h3 class="text">רוצים לקבל התראות אוטומטיות על התרמות באיזור שלכם בזמן המתאים?
             מלאו את הפרטים וקבלו התראות </h3>
         <br><br> <!-- line break -->
 
         <form action="/users" method="POST">
-            <input class="inputText" name="fname" type="text" placeholder="שם פרטי">
-            <input class="inputText" name="lname" type="text" placeholder="שם משפחה">
+
+            <input class="inputText" type="text" placeholder="שם פרטי">
+            <input class="inputText" type="text" placeholder="שם משפחה">
             <br><br> <!-- line break -->
 
-            <input class="inputText" name="address" type="text" placeholder="כתובת">
-            <input class="inputDate" type="date">
+
+            <input class="inputText" type="text" placeholder="כתובת">
+            <input type="text" class="inputText" id="datepicker" placeholder="תאריך תרומה אחרון">
+            <!-- <input class="inputText" type="text" id="datepicker" placeholder="תאריך תרומה אחרון"> -->
+
+
+            <!-- <input type="date" class="inputDate" placeholder="תאריך תרומת אחרון" /> -->
+
+            <!-- <input type="text" class="inputText" placeholder="תאריך תרומת" onfocus="(this.type='date')" /> -->
+            <!-- <input class="inputDate" type="date"> -->
             <br><br> <!-- line break -->
 
             <input class="inputText" name="mail" type="email" placeholder="מייל">

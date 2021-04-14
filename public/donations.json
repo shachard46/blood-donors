@@ -13,6 +13,18 @@
   },
   {
     "date": "8/4/2021",
+    "address": "עולש",
+    "startTime": "17:00",
+    "endTime": "19:30"
+  },
+  {
+    "date": "7/4/2021",
+    "address": "בת חפר",
+    "startTime": "17:00",
+    "endTime": "19:30"
+  },
+  {
+    "date": "3/4/2021",
     "address": "בת חפר",
     "startTime": "17:00",
     "endTime": "19:30"
@@ -24,32 +36,20 @@
     "endTime": "19:30"
   },
   {
-    "date": "7/4/2021",
-    "address": "בת עחפר",
-    "startTime": "17:00",
-    "endTime": "19:30"
-  },
-  {
-    "date": "7/4/2021",
-    "address": "בת חכפר",
-    "startTime": "17:00",
-    "endTime": "19:30"
-  },
-  {
-    "date": "7/4/2021",
+    "date": "8/4/2021",
     "address": "בת חפר",
     "startTime": "17:00",
     "endTime": "19:30"
   },
   {
-    "date": "7/4/2021",
+    "date": "9/4/2021",
     "address": "בת חפר",
     "startTime": "17:00",
     "endTime": "19:30"
   },
   {
-    "date": "7/4/2021",
-    "address": "בת דחפר",
+    "date": "5/4/2021",
+    "address": "בת חפר",
     "startTime": "18:00",
     "endTime": "19:30"
   }
