@@ -44,7 +44,7 @@ function filterList(list, callback) {
 }
 function SetHomeAddress(Adreess) {
   homeAddress = Adreess;
-  initMap();
+  updateMap();
 }
 function clickMarker(marker) {
   google.maps.event.addListener(marker, "click", function () {
