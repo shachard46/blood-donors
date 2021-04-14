@@ -112,30 +112,7 @@ function setDescription(donation) {
     txt = txt + `שעת סיום: ${donation.endTime} \n`;
     return txt;
 }
-// function updateTable() {
-//     let table = document.getElementById("donationTable");
-//     let rowCount = table.rows.length;
-//     if (rowCount > 1) {
-//       for (let i = rowCount; i > 1; i--) {
-//         table.deleteRow(i - 1);
-//       }
-//     }
-//     filterList(all_donation_list, (filteredList) => {
-//       console.log("filtered list: ", filteredList);
-//       filteredList.forEach((element) => {
-//         rowCount = table.rows.length;
-//         let row = table.insertRow(rowCount);
-//         row.insertCell(0).innerHTML = findByAddress(element.address).date;
-//         row.insertCell(1).innerHTML = findByAddress(element.address).address;
-//         row.insertCell(2).innerHTML =
-//           findByAddress(element.address).startTime +
-//           "-" +
-//           findByAddress(element.address).endTime;
-//         row.insertCell(3).innerHTML =
-//           parseFloat(element.distance).toFixed(1).toString() + ` ק"מ`;
-//       });
-//     });
-//   }
+
 function getAdressFromPin(marker) {
     let str = marker.getTitle();
     for (var i = 7; i < str.length; i++) { }

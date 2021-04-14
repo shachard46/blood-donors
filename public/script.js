@@ -10,20 +10,19 @@ var tableRows = document.getElementsByTagName("myTableData");
 const DAY_IN_MS = 8.64e7;
 
 for (var i = 0; i < tableRows.length; i += 1) {
-  tableRows[i].addEventListener("mouseover", function (e) {});
+  tableRows[i].addEventListener("mouseover", function (e) { });
   // or attachEvent, depends on browser
 }
 
 function getDateFilters() {
   var e = document.getElementById("selectList");
   var strUser = e.value;
-  console.log(strUser);
   return strUser;
 }
 function filterByDate(exact, list, date) {
   return _.filter(list, (e) => {
-    var dateParts = e.date.split("/");
-    var calDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+    // var dateParts = e.date.split("/");
+    var calDate = new Date(e.date);
     let inRange =
       Math.abs(calDate.getTime() - date.getTime()) <= 5 * DAY_IN_MS &&
       calDate.getTime() > Date.now();
@@ -95,6 +94,7 @@ function getDistances(origin, destinations, callback) {
       avoidTolls: false,
     },
     (response, status) => {
+      console.log(status);
       if (status == google.maps.DistanceMatrixStatus.OK) {
         const elements = response.rows[0].elements;
         for (i = 0; i < elements.length; i++) {
@@ -119,6 +119,7 @@ function addKM(list) {
   return list;
 }
 function filterByDistance(max, destinations, callback) {
+
   getDistances(homeAddress, destinations, (distances) => {
     var filtered = _.filter(distances, (dist) => Number(dist.distance) <= max);
     console.log(filtered);
@@ -126,6 +127,7 @@ function filterByDistance(max, destinations, callback) {
   });
 }
 function findByAddressAndDate(address, date) {
+
   return _.filter(
     all_donation_list,
     (element) => element.address == address && element.date == date
@@ -133,4 +135,29 @@ function findByAddressAndDate(address, date) {
 }
 function readFromFile() {
   $.getJSON("../donations.json", (data) => (all_donation_list = data));
+}
+function updateTable() {
+  let table = document.getElementById("donationTable");
+  let rowCount = table.rows.length;
+  console.log(rowCount);
+  if (rowCount > 0) {
+    for (let i = rowCount; i > 0; i--) {
+      table.deleteRow(i - 1);
+    }
+  }
+  filterList(all_donation_list, (filteredList) => {
+    console.log("filtered list: ", filteredList);
+    filteredList.forEach((element) => {
+      rowCount = table.rows.length;
+      let row = table.insertRow(rowCount);
+      row.insertCell(0).innerHTML = findByAddressAndDate(element.address, element.date).date;
+      row.insertCell(1).innerHTML = findByAddressAndDate(element.address, element.date).address;
+      row.insertCell(2).innerHTML =
+        findByAddressAndDate(element.address, element.date).startTime +
+        "-" +
+        findByAddressAndDate(element.address, element.date).endTime;
+      row.insertCell(3).innerHTML =
+        parseFloat(element.distance).toFixed(1).toString() + ` ק"מ`;
+    });
+  });
 }
