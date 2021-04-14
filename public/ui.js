@@ -67,9 +67,17 @@ function initMap() {
   });
   setPin(map, homeAddress, true, "הבית שלך");
 }
+
 function updateMap() {
   filterList(all_donation_list, (filterdList) => {
-    initMap();
+    if (homeAddress == undefined) {
+      homeAddress = getCurrentLocation();
+      document.getElementById("location_input").value = homeAddress;
+    }
+    let map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 13,
+    });
+    setPin(map, homeAddress, true, "הבית שלך");
     for (let donation in filterdList) {
       setPin(
         map,
