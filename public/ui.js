@@ -69,15 +69,7 @@ function initMap() {
 }
 function updateMap() {
   filterList(all_donation_list, (filterdList) => {
-    if (homeAddress == undefined) {
-      homeAddress = getCurrentLocation();
-      document.getElementById("location_input").value = homeAddress;
-    }
-    let map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 13,
-    });
-    setPin(map, homeAddress, true, "הבית שלך");
-    setTimeout(() => {}, 100);
+    initMap();
     for (let donation in filterdList) {
       setPin(
         map,
@@ -85,7 +77,6 @@ function updateMap() {
         false,
         setDescription(filterdList[donation])
       );
-      setTimeout(() => {}, 1000);
     }
   });
 }
