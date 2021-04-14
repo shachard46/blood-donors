@@ -1,20 +1,25 @@
-import firebase from "firebase";
-import "firebase/firestore";
-import { filter } from "underscore";
-import express, { static } from "express";
+const firebase = require("firebase");
+const _ = require("underscore");
+const express = require("express");
+const bodyParser = require("body-parser");
+const multer = require("multer");
 const app = express();
 const port = 5502;
-app.use(static("/Users/shachardavid/projects/blood-donors/public"));
+const origin = "/index.html";
+const upload = multer();
+app.use(express.static("/Users/shachardavid/projects/blood-donors/public"));
+app.use(bodyParser.urlencoded());
+app.use(upload.array());
 
-// firebase.initializeApp({
-//   a1p1i1K1e1y: "1AIzaSyDJMt1tB21TIo6Y2p6bfUCSbLzDZVyaK741",
-//   authDomain: "blooddonations-5673c.firebaseapp.com",
-//   projectId: "blooddonations-5673c",
-//   storageBucket: "blooddonations-5673c.appspot.com",
-//   messagingSenderId: "72738388190",
-//   appId: "1:72738388190:web:00028344298a839c40aa4f",
-//   measurementId: "G-2X8KSL0N1E",
-// });
+firebase.initializeApp({
+  apiKey: "AIzaSyDJMt1tB21TIo6Y2p6bfUCSbLzDZVyaK74",
+  authDomain: "blooddonations-5673c.firebaseapp.com",
+  projectId: "blooddonations-5673c",
+  storageBucket: "blooddonations-5673c.appspot.com",
+  messagingSenderId: "72738388190",
+  appId: "1:72738388190:web:00028344298a839c40aa4f",
+  measurementId: "G-2X8KSL0N1E",
+});
 const db = firebase.firestore();
 
 async function addUser(user) {
@@ -24,22 +29,26 @@ async function addUser(user) {
 async function getUser(userid) {
   let users = await getUsers();
   console.log(users);
-  return filter(users, (user) => user.id == userid);
+  return _.filter(users, (user) => user.id == userid);
 }
 async function getUsers() {
   return (await db.collection("users").get()).docs.map((doc) => doc.data());
 }
 
-app.get("/index.html/users", async (req, res) => {
+app.get("/users", async (req, res) => {
   res.send(await getUsers());
+  res.redirect(origin);
 });
 
-app.get("/index.html/users/:userid", async (req, res) => {
+app.get("/users/:userid", async (req, res) => {
   res.send(await getUser(req.params.userid));
+  // res.redirect(origin);
 });
 
-app.post("/index.html/users", async (req, res) => {
-  res.send(await addUser(req.body));
+app.post("/users", async (req, res) => {
+  console.log("body: ", req.body);
+  await addUser(req.body);
+  res.redirect(origin);
 });
 
 app.listen(port, () => {
