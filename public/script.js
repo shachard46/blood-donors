@@ -20,12 +20,15 @@ function getDateFilters() {
   return strUser;
 }
 function filterByDate(exact, list, date) {
+  let dateParts = translateCalanderDate(date).split("/");
+  date = new Date(dateParts[0] + "/" + dateParts[1] + "/" + dateParts[2]);
   return _.filter(list, (e) => {
-    // var dateParts = e.date.split("/");
-    var calDate = new Date(e.date);
+    dateParts = translateCalanderDate(e.date).split("/");
+    calDate = new Date(dateParts[0] + "/" + dateParts[1] + "/" + dateParts[2]);
     let inRange =
       Math.abs(calDate.getTime() - date.getTime()) <= 5 * DAY_IN_MS &&
       calDate.getTime() > Date.now();
+    console.log("inrange:", inRange);
     return exact
       ? translateCalanderDate(e.date) == translateCalanderDate(date)
       : inRange;
