@@ -143,21 +143,9 @@ body {
 
 table {
   width: 100%;
-  /* border-top: 1px solid #c4131d;
-  border-right: 1px solid #c4131d;
-  border-left: 1px solid #c4131d; */
-  /* border-bottom: 1px solid #c4131d; */
-
-
-
 }
-thead {
-  display: table; 
-  width: calc(100% - 17px); 
-}
+
 th {
-  background-color: #F5F6F7;
-  width: 25%;
   border: 1px solid #c4131d;
 }
 td {
