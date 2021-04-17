@@ -10,7 +10,7 @@ var tableRows = document.getElementsByTagName("myTableData");
 const DAY_IN_MS = 8.64e7;
 
 for (var i = 0; i < tableRows.length; i += 1) {
-  tableRows[i].addEventListener("mouseover", function (e) { });
+  tableRows[i].addEventListener("mouseover", function (e) {});
   // or attachEvent, depends on browser
 }
 
@@ -94,15 +94,16 @@ function getDistances(origin, destinations, callback) {
       avoidTolls: false,
     },
     (response, status) => {
-      console.log(status);
       if (status == google.maps.DistanceMatrixStatus.OK) {
         const elements = response.rows[0].elements;
+        console.log(elements);
         for (i = 0; i < elements.length; i++) {
-          distances.push({
-            address: addresses[i],
-            date: dates[i],
-            distance: Number(elements[i].distance.value) / 1000,
-          });
+          if (elements[i].status == "OK")
+            distances.push({
+              address: addresses[i],
+              date: dates[i],
+              distance: Number(elements[i].distance.value) / 1000,
+            });
         }
         distances = _.sortBy(distances, (distance) => distance.distance);
         console.log(distances);
@@ -119,7 +120,6 @@ function addKM(list) {
   return list;
 }
 function filterByDistance(max, destinations, callback) {
-
   getDistances(homeAddress, destinations, (distances) => {
     var filtered = _.filter(distances, (dist) => Number(dist.distance) <= max);
     console.log(filtered);
@@ -127,7 +127,6 @@ function filterByDistance(max, destinations, callback) {
   });
 }
 function findByAddressAndDate(address, date) {
-
   return _.filter(
     all_donation_list,
     (element) => element.address == address && element.date == date
@@ -140,8 +139,8 @@ function updateTable() {
   let table = document.getElementById("donationTable");
   let rowCount = table.rows.length;
   console.log(rowCount);
-  if (rowCount > 1) {
-    for (let i = rowCount; i > 1; i--) {
+  if (rowCount > 0) {
+    for (let i = rowCount; i > 0; i--) {
       table.deleteRow(i - 1);
     }
   }
@@ -150,8 +149,14 @@ function updateTable() {
     filteredList.forEach((element) => {
       rowCount = table.rows.length;
       let row = table.insertRow(rowCount);
-      row.insertCell(0).innerHTML = findByAddressAndDate(element.address, element.date).date;
-      row.insertCell(1).innerHTML = findByAddressAndDate(element.address, element.date).address;
+      row.insertCell(0).innerHTML = findByAddressAndDate(
+        element.address,
+        element.date
+      ).date;
+      row.insertCell(1).innerHTML = findByAddressAndDate(
+        element.address,
+        element.date
+      ).address;
       row.insertCell(2).innerHTML =
         findByAddressAndDate(element.address, element.date).startTime +
         "-" +
