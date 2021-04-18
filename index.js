@@ -35,20 +35,20 @@ async function getUsers() {
   return (await db.collection("users").get()).docs.map((doc) => doc.data());
 }
 
-app.get("/users", async (req, res) => {
+app.get("/api/users", async (req, res) => {
   res.send(await getUsers());
   res.redirect(origin);
 });
 
-app.get("/users/:userid", async (req, res) => {
+app.get("/api/users/:userid", async (req, res) => {
   res.send(await getUser(req.params.userid));
   // res.redirect(origin);
 });
 
-app.post("/users", async (req, res) => {
+app.post("/api/users", async (req, res) => {
   console.log("body: ", req.body);
   await addUser(req.body);
-  res.redirect(origin);
+  // res.redirect(origin);
 });
 
 app.listen(port, () => {

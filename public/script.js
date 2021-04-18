@@ -169,3 +169,8 @@ function updateTable() {
     });
   });
 }
+function post() {
+  let data = $("form").serializeArray();
+  console.log(data);
+  $.ajax({ type: "POST", url: "/api/users", data: data, enctype: true});
+}
