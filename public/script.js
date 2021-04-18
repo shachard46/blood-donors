@@ -170,7 +170,13 @@ function updateTable() {
   });
 }
 function post() {
-  let data = $("form").serializeArray();
-  console.log(data);
-  $.ajax({ type: "POST", url: "/api/users", data: data, enctype: true});
+  let formNodes = document.getElementById("form").childNodes;
+  let formData = {};
+  _.forEach(
+    _.filter(formNodes, (node) => node.type != undefined),
+    (node) => (formData[node.name] = node.value)
+  );
+  console.log(formData);
+  $.ajax({ type: "POST", url: "/api/users", data: formData, enctype: true });
+  location.href = "thanks.html";
 }

@@ -6,20 +6,21 @@ const multer = require("multer");
 const app = express();
 const port = 5502;
 const origin = "/index.html";
+const thanksPage = "/thanks.html";
 const upload = multer();
 app.use(express.static("./public"));
 app.use(bodyParser.urlencoded());
 app.use(upload.array());
 
-firebase.initializeApp({
-  apiKey: "AIzaSyDJMt1tB21TIo6Y2p6bfUCSbLzDZVyaK74",
-  authDomain: "blooddonations-5673c.firebaseapp.com",
-  projectId: "blooddonations-5673c",
-  storageBucket: "blooddonations-5673c.appspot.com",
-  messagingSenderId: "72738388190",
-  appId: "1:72738388190:web:00028344298a839c40aa4f",
-  measurementId: "G-2X8KSL0N1E",
-});
+// firebase.initializeApp({
+//   apiKey: "AIzaSyDJMt1tB21TIo6Y2p6bfUCSbLzDZVyaK74",
+//   authDomain: "blooddonations-5673c.firebaseapp.com",
+//   projectId: "blooddonations-5673c",
+//   storageBucket: "blooddonations-5673c.appspot.com",
+//   messagingSenderId: "72738388190",
+//   appId: "1:72738388190:web:00028344298a839c40aa4f",
+//   measurementId: "G-2X8KSL0N1E",
+// });
 const db = firebase.firestore();
 
 async function addUser(user) {
@@ -48,7 +49,7 @@ app.get("/api/users/:userid", async (req, res) => {
 app.post("/api/users", async (req, res) => {
   console.log("body: ", req.body);
   await addUser(req.body);
-  // res.redirect(origin);
+  // res.redirect(thanksPage);
 });
 
 app.listen(port, () => {

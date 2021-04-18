@@ -5,10 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ABO SingUp</title>
-    <link rel="stylesheet" href="SingUp.css">
+    <link rel="stylesheet" href="signUp.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript" src="ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.12.1/underscore-min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -35,13 +36,13 @@
 
         <form id="form">
 
-            <input class="inputText" type="text" placeholder="שם פרטי" />
-            <input class="inputText" type="text" placeholder="שם משפחה" />
+            <input class="inputText" name="fname" type="text" placeholder="שם פרטי" />
+            <input class="inputText" name="lname" type="text" placeholder="שם משפחה" />
             <br><br> <!-- line break -->
 
 
-            <input class="inputText" type="text" placeholder="כתובת" />
-            <input type="text" class="inputText" id="datepicker" placeholder="תאריך תרומה אחרון" />
+            <input class="inputText" name="address" type="text" placeholder="כתובת" />
+            <input class="inputText" name="lastDonation" type="text" id="datepicker" placeholder="תאריך תרומה אחרון" />
 
             <br><br> <!-- line break -->
 
