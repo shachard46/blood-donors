@@ -153,7 +153,7 @@ td {
   padding: 10px;
 }
 .logo {
-  width: 50%;
+  width: 25%;
 }
 
 ::-webkit-scrollbar {
@@ -205,10 +205,10 @@ td {
   text-align: center;
 }
 .scroll{
-  overflow:scroll;
-  height: auto;
-  width:100%;
+  font-family: "Roboto", Sans-serif;
   overflow:auto;
+  height: 200px;
+  width:100%;
 }
 @media screen and (max-width:1200px) {
   .filters_container {width: 100%;   position: relative; 
@@ -239,6 +239,7 @@ td {
   }
   .scroll{
     overflow:visible;
+    height: auto;
   }
 
 @media screen and (max-width: 1500px) {
