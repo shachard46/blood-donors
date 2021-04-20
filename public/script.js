@@ -10,7 +10,7 @@ var tableRows = document.getElementsByTagName("myTableData");
 const DAY_IN_MS = 8.64e7;
 
 for (var i = 0; i < tableRows.length; i += 1) {
-  tableRows[i].addEventListener("mouseover", function (e) {});
+  tableRows[i].addEventListener("mouseover", function (e) { });
   // or attachEvent, depends on browser
 }
 
@@ -30,7 +30,7 @@ function filterByDate(exact, list, date) {
       calDate.getTime() > Date.now();
     return exact
       ? translateCalanderDate(calDate) == translateCalanderDate(date) &&
-          calDate.getTime() > Date.now()
+      calDate.getTime() > Date.now()
       : inRange;
   });
 }
@@ -55,21 +55,30 @@ function clickMarker(marker) {
     //markRow
   });
 }
-function getCurrentLocation() {
-  // if (navigator.geolocation) {
-  //   navigator.geolocation.getCurrentPosition(
-  //     (position) => {
-  //       const pos = {
-  //         lat: position.coords.latitude,
-  //         lng: position.coords.longitude,
-  //       };
-  //       // alert(pos.value);
-  //       return pos;
-  //     },
-  //     () => {}
-  //   );
-  // }
-  return "יד חנה";
+function coordinatesToName(Address, callback) {
+  geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ address: Address }, function (results, status) {
+    if (status === "OK") {
+      let AddressName = results[0].address_components[1].short_name;
+      callback(AddressName);
+    } else {
+      alert("Geocode was not successful for the following reason: " + status);
+    }
+  });
+}
+function getCurrentLocation(callback) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const pos = position.coords.latitude + "," + position.coords.longitude;
+        coordinatesToName(pos, (result) => callback(result));
+        // alert(pos.value);
+      },
+      () => { }
+    );
+
+
+  }
 }
 function autoComplete() {
   let addressField = document.getElementById("location_input");
@@ -140,7 +149,7 @@ function findByAddressAndDate(address, date) {
   )[0];
 }
 function readFromFile() {
-  $.getJSON("../donations.json", (data) => (all_donation_list = data));
+  $.getJSON("./donations.json", (data) => (all_donation_list = data));
 }
 function updateTable() {
   let table = document.getElementById("donationTable");
