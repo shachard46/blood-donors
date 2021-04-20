@@ -13,7 +13,7 @@ body {
   left: 0;
   border-style: solid;
   border-width: 0px 3px 0px 0px;
-  border-color: #C4131D;
+  border-color: #c4131d;
 }
 
 #map {
@@ -27,13 +27,10 @@ body {
   height: 100%;
   width: 25%;
   position: fixed;
-
 }
-
 
 .divWrapFilter {
   padding: 40px;
-
 }
 
 .divWrapMap {
@@ -41,7 +38,7 @@ body {
 }
 
 .discription {
-  color: #C4131D;
+  color: #c4131d;
   font-family: "Roboto", Sans-serif;
   font-size: 20px;
   font-weight: 400;
@@ -55,12 +52,12 @@ body {
   font-size: 100%;
   background-color: #e5e3e3;
   padding: 1% 5% 1% 5%;
-  padding: .75em;
+  padding: 0.75em;
 }
 
 .sliderDiscription {
-  padding-right: calc(10px/2);
-  padding-left: calc(10px/2);
+  padding-right: calc(10px / 2);
+  padding-left: calc(10px / 2);
   margin-bottom: 20px;
   color: #282727;
   font-family: "Roboto", Sans-serif;
@@ -99,12 +96,10 @@ body {
   font-size: 100%;
   background-color: #e5e3e3;
   padding: 1% 5% 1% 5%;
-  padding: .75em;
+  padding: 0.75em;
   text-align: center;
   height: 50px;
   font-family: "Roboto", Sans-serif;
-
-
 }
 
 .inputSelect {
@@ -115,15 +110,13 @@ body {
   font-size: 100%;
   background-color: #e5e3e3;
   padding: 1% 5% 1% 5%;
-  padding: .75em;
+  padding: 0.75em;
   text-align: center;
   vertical-align: top;
   height: 50px;
   font-family: "Roboto", Sans-serif;
   float: left;
-
 }
-
 
 .Button {
   background-color: #e5e3e3;
@@ -152,15 +145,15 @@ th {
 }
 td {
   border-right: 1px solid #c4131d;
-  border-left: 1px solid #c4131d; 
-  border-bottom: 1px solid #c4131d; 
-    /* border: 1px solid #c4131d; */
+  border-left: 1px solid #c4131d;
+  border-bottom: 1px solid #c4131d;
+  /* border: 1px solid #c4131d; */
 
   text-align: center;
   padding: 10px;
 }
 .logo {
-  width:25%;
+  width: 25%;
 }
 
 ::-webkit-scrollbar {
@@ -168,18 +161,17 @@ td {
 }
 
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); 
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px #c4131d; 
+  -webkit-box-shadow: inset 0 0 6px #c4131d;
 }
 .return {
   float: right;
-  vertical-align:middle;
-
+  vertical-align: middle;
 }
 .allfooter {
   text-align: left;
@@ -191,31 +183,54 @@ td {
   bottom: 0;
   width: 25%;
 }
-.foot{
+.foot {
   text-align: center;
   margin: 0;
 }
-.footerWarp{
+.footerWarp {
   text-align: center;
   padding-left: 40px;
   padding-right: 40px;
   padding-bottom: 5px;
-
+}
+#t_header {
+  position: sticky;
 }
 
-@media screen and (max-width:1200px) {
-  .filters_container {width: 100%;   position: relative; 
+@media screen and (max-width: 1200px) {
+  .filters_container {
+    width: 100%;
+    position: relative;
     border-style: solid;
     border-width: 0px 0px 3px 0px;
-    border-color: #C4131D; }
-  .map_container {width: 100%;position: relative;border-width: 0px 0px 0px 0px;}
-  .discription{ text-align: center;}
-  .disText{text-align: center;}
-  .inputAdress{text-align: center;}
-  .allfooter{  width: 100%;  }
+    border-color: #c4131d;
+  }
+  .map_container {
+    width: 100%;
+    position: relative;
+    border-width: 0px 0px 0px 0px;
+  }
+  .discription {
+    text-align: center;
+  }
+  .disText {
+    text-align: center;
+  }
+  .inputAdress {
+    text-align: center;
+  }
+  .allfooter {
+    width: 100%;
+  }
 }
 
-@media screen and (max-width:1500px) {
-  .inputDate {width: 100%;}
-  .inputSelect {width: 100%; margin-top: 0.5em;margin-bottom: 0.5em}
+@media screen and (max-width: 1500px) {
+  .inputDate {
+    width: 100%;
+  }
+  .inputSelect {
+    width: 100%;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
 }

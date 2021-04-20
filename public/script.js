@@ -87,6 +87,8 @@ function getDistances(origin, destinations, callback) {
   let service = new google.maps.DistanceMatrixService(); //initialize the distance service
   let addresses = _.map(destinations, (dest) => dest.address);
   let dates = _.map(destinations, (dest) => dest.date);
+  let startTimes = _.map(destinations, (dest) => dest.startTime);
+  let endTimes = _.map(destinations, (dest) => dest.endTime);
   service.getDistanceMatrix(
     {
       origins: [origin], //set origin, you can specify multiple sources here
@@ -106,6 +108,8 @@ function getDistances(origin, destinations, callback) {
               address: addresses[i],
               date: dates[i],
               distance: Number(elements[i].distance.value) / 1000,
+              startTime: startTimes[i],
+              endTime: endTimes[i],
             });
         }
         distances = _.sortBy(distances, (distance) => distance.distance);

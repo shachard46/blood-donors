@@ -1,18 +1,23 @@
 // tabel
 function translateCalanderDate(date) {
-  var date = new Date(date);
-  var day = date.getDate();
-  var month = date.getMonth() + 1;
-  var year = date.getYear() - 100;
-  var newDate = [day, month, year].join("/");
+  date = new Date(date);
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getYear() - 100;
+  let newDate = [day, month, year].join("/");
   return newDate;
 }
 function getRowIndex(marker) {
-  var i = 1;
+  let i = 1;
   filterList(all_donation_list, (filteredList) => {
     filteredList.forEach((element) => {
-      if (findByAddress(element.address).address == getAdressFromPin(marker)) {
-        console.log(findByAddress(element.address).address);
+      if (
+        findByAddressAndDate(element.address, element.date).address ==
+        getAdressFromPin(marker)
+      ) {
+        console.log(
+          findByAddressAndDate(element.address, element.date).address
+        );
         console.log(i);
         return markRow(i);
       } else {
@@ -22,7 +27,7 @@ function getRowIndex(marker) {
   });
 }
 function getRGB(str) {
-  var match = str.match(
+  let match = str.match(
     /rgba?\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)?(?:, ?(\d(?:\.\d?))\))?/
   );
   return match
@@ -34,18 +39,18 @@ function getRGB(str) {
     : {};
 }
 function componentToHex(c) {
-  var hex = c.toString(16);
+  let hex = c.toString(16);
   return hex.length == 1 ? "0" + hex : hex;
 }
 function rgbToHex(r, g, b) {
   return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 function markRow(index) {
-  let table = document.getElementById("myTableData");
-  var rows = table.getElementsByTagName("tr");
+  let table = document.getElementById("donationTable");
+  let rows = table.getElementsByTagName("tr");
   let MainbackgroundColor = "#e5e3e3";
   let secColor = "#c4131d";
-  var rgb = rows[index].style.backgroundColor;
+  let rgb = rows[index].style.backgroundColor;
   let r = parseInt(getRGB(rgb).red);
   let g = parseInt(getRGB(rgb).green);
   let b = parseInt(getRGB(rgb).blue);
@@ -124,11 +129,11 @@ function setDescription(donation) {
 
 function getAdressFromPin(marker) {
   let str = marker.getTitle();
-  for (var i = 7; i < str.length; i++) {}
-  var i = 7;
+  for (let i = 7; i < str.length; i++) {}
+  let i = 7;
   while (str[i] != "ש") {
     i++;
   }
-  var res = str.slice(7, i - 1);
+  let res = str.slice(7, i - 1);
   return res;
 }
