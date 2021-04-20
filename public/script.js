@@ -20,17 +20,17 @@ function getDateFilters() {
   return strUser;
 }
 function filterByDate(exact, list, date) {
-  let dateParts = translateCalanderDate(date).split("/");
-  date = new Date(dateParts[0] + "/" + dateParts[1] + "/" + dateParts[2]);
+  let dateParts = date.split("/");
+  date = new Date(dateParts[1] + "/" + dateParts[0] + "/" + dateParts[2]);
   return _.filter(list, (e) => {
-    dateParts = translateCalanderDate(e.date).split("/");
-    calDate = new Date(dateParts[0] + "/" + dateParts[1] + "/" + dateParts[2]);
+    dateParts = e.date.split("/");
+    calDate = new Date(dateParts[1] + "/" + dateParts[0] + "/" + dateParts[2]);
     let inRange =
       Math.abs(calDate.getTime() - date.getTime()) <= 5 * DAY_IN_MS &&
       calDate.getTime() > Date.now();
-    console.log("inrange:", inRange);
     return exact
-      ? translateCalanderDate(e.date) == translateCalanderDate(date)
+      ? translateCalanderDate(calDate) == translateCalanderDate(date) &&
+      calDate.getTime() > Date.now()
       : inRange;
   });
 }
@@ -40,7 +40,7 @@ function filterList(list, callback) {
     filterByDate(
       getDateFilters() == "תאריך מדוייק",
       list,
-      new Date(document.getElementById("date").value)
+      document.getElementById("date").value
     ),
     (filtered) => callback(filtered)
   );
@@ -143,8 +143,8 @@ function updateTable() {
   let rowCount = table.rows.length;
   console.log(rowCount);
   if (rowCount > 0) {
-    for (let i = rowCount; i > 1; i--) {
-      table.deleteRow(i - 1);
+    for (let i = rowCount; i > 0; i--) {
+      if (table.rows[i - 1].id !== "t_header") table.deleteRow(i - 1);
     }
   }
   filterList(all_donation_list, (filteredList) => {
