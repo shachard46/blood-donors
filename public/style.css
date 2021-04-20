@@ -241,7 +241,7 @@ td {
     overflow:visible;
     height: auto;
   }
-
+}
 @media screen and (max-width: 1500px) {
   .inputDate {
     width: 100%;
