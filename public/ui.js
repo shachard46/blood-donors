@@ -1,4 +1,3 @@
-
 // tabel
 function translateCalanderDate(date) {
   date = new Date(date);
@@ -16,11 +15,7 @@ function getRowIndex(marker) {
         findByAddressAndDate(element.address, element.date).address ==
         getAdressFromPin(marker)
       ) {
-        console.log(
-          findByAddressAndDate(element.address, element.date).address
-        );
-        console.log(i);
-        return markRow(i);
+        markRow(i);
       } else {
         i++;
       }
@@ -33,10 +28,10 @@ function getRGB(str) {
   );
   return match
     ? {
-      red: match[1],
-      green: match[2],
-      blue: match[3],
-    }
+        red: match[1],
+        green: match[2],
+        blue: match[3],
+      }
     : {};
 }
 function componentToHex(c) {
@@ -76,7 +71,6 @@ function initMap() {
   });
 }
 
-
 function updateMap() {
   filterList(all_donation_list, (filterdList) => {
     getCurrentLocation((Address) => {
@@ -97,7 +91,6 @@ function updateMap() {
         );
       }
     });
-
   });
 }
 
@@ -137,9 +130,8 @@ function setDescription(donation) {
 
 function getAdressFromPin(marker) {
   let str = marker.getTitle();
-  for (let i = 7; i < str.length; i++) {}
   let i = 7;
-  while (str[i] != "ש") {
+  while (str[i] != "ש" || str[i + 1] != "ע" || str[i + 2] != "ת") {
     i++;
   }
   let res = str.slice(7, i - 1);
