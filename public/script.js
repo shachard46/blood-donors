@@ -10,7 +10,7 @@ var tableRows = document.getElementsByTagName("myTableData");
 const DAY_IN_MS = 8.64e7;
 
 for (var i = 0; i < tableRows.length; i += 1) {
-  tableRows[i].addEventListener("mouseover", function (e) { });
+  tableRows[i].addEventListener("mouseover", function (e) {});
   // or attachEvent, depends on browser
 }
 
@@ -30,7 +30,7 @@ function filterByDate(exact, list, date) {
       calDate.getTime() > Date.now();
     return exact
       ? translateCalanderDate(calDate) == translateCalanderDate(date) &&
-      calDate.getTime() > Date.now()
+          calDate.getTime() > Date.now()
       : inRange;
   });
 }
@@ -59,7 +59,7 @@ function coordinatesToName(Address, callback) {
   geocoder = new google.maps.Geocoder();
   geocoder.geocode({ address: Address }, function (results, status) {
     if (status === "OK") {
-      let AddressName = results[0].address_components[1].short_name;
+      let AddressName = results[0].address_components[1].long_name;
       callback(AddressName);
     } else {
       alert("Geocode was not successful for the following reason: " + status);
@@ -74,10 +74,8 @@ function getCurrentLocation(callback) {
         coordinatesToName(pos, (result) => callback(result));
         // alert(pos.value);
       },
-      () => { }
+      () => {}
     );
-
-
   }
 }
 function autoComplete() {
@@ -110,7 +108,6 @@ function getDistances(origin, destinations, callback) {
     (response, status) => {
       if (status == google.maps.DistanceMatrixStatus.OK) {
         const elements = response.rows[0].elements;
-        console.log(elements);
         for (i = 0; i < elements.length; i++) {
           if (elements[i].status == "OK")
             distances.push({
@@ -122,7 +119,6 @@ function getDistances(origin, destinations, callback) {
             });
         }
         distances = _.sortBy(distances, (distance) => distance.distance);
-        console.log(distances);
         callback(distances);
       }
     }
@@ -132,13 +128,11 @@ function addKM(list) {
   for (let i = 0; i < list.length; i++) {
     list[i].distance = list[i].distance + "km";
   }
-  console.log(list);
   return list;
 }
 function filterByDistance(max, destinations, callback) {
   getDistances(homeAddress, destinations, (distances) => {
     var filtered = _.filter(distances, (dist) => Number(dist.distance) <= max);
-    console.log(filtered);
     callback(filtered);
   });
 }
@@ -154,14 +148,12 @@ function readFromFile() {
 function updateTable() {
   let table = document.getElementById("donationTable");
   let rowCount = table.rows.length;
-  console.log(rowCount);
-  if (rowCount > 1) {
-    for (let i = rowCount; i > 1; i--) {
-      if (table.rows[i].id !== "t_header") table.deleteRow(i - 1);
+  if (rowCount > 0) {
+    for (let i = rowCount; i > 0; i--) {
+      if (table.rows[i - 1].id !== "t_header") table.deleteRow(i - 1);
     }
   }
   filterList(all_donation_list, (filteredList) => {
-    console.log("filtered list: ", filteredList);
     filteredList.forEach((element) => {
       rowCount = table.rows.length;
       let row = table.insertRow(rowCount);
@@ -189,7 +181,6 @@ function post() {
     _.filter(formNodes, (node) => node.type != undefined),
     (node) => (formData[node.name] = node.value)
   );
-  console.log(formData);
   $.ajax({ type: "POST", url: "/api/users", data: formData, enctype: true });
   location.href = "thanks.html";
 }
