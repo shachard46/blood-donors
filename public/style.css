@@ -170,13 +170,8 @@ td {
   -webkit-box-shadow: inset 0 0 6px #c4131d;
 }
 .return {
-<<<<<<< HEAD
-  float: right;
-  vertical-align: middle;
-=======
   width: 100%;
   border: 1px solid #c4131d;
->>>>>>> cbf07ec42979de77b41df0e9dd6739806a6d565c
 }
 .allfooter {
   text-align: left;
