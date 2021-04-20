@@ -1,3 +1,4 @@
+
 // tabel
 function translateCalanderDate(date) {
   var date = new Date(date);
@@ -27,10 +28,10 @@ function getRGB(str) {
   );
   return match
     ? {
-        red: match[1],
-        green: match[2],
-        blue: match[3],
-      }
+      red: match[1],
+      green: match[2],
+      blue: match[3],
+    }
     : {};
 }
 function componentToHex(c) {
@@ -58,36 +59,43 @@ function markRow(index) {
 
 //map
 function initMap() {
-  if (homeAddress == undefined) {
-    homeAddress = getCurrentLocation();
-    document.getElementById("location_input").value = homeAddress;
-  }
-  let map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 13,
-  });
-  setPin(map, homeAddress, true, "הבית שלך");
-}
-
-function updateMap() {
-  filterList(all_donation_list, (filterdList) => {
+  getCurrentLocation((Address) => {
     if (homeAddress == undefined) {
-      homeAddress = getCurrentLocation();
+      homeAddress = Address;
       document.getElementById("location_input").value = homeAddress;
     }
     let map = new google.maps.Map(document.getElementById("map"), {
       zoom: 13,
     });
     setPin(map, homeAddress, true, "הבית שלך");
-    for (let donation in filterdList) {
-      setPin(
-        map,
-        filterdList[donation].address,
-        false,
-        setDescription(filterdList[donation])
-      );
-    }
   });
 }
+
+
+function updateMap() {
+  filterList(all_donation_list, (filterdList) => {
+    getCurrentLocation((Address) => {
+      if (homeAddress == undefined) {
+        homeAddress = Address;
+        document.getElementById("location_input").value = homeAddress;
+      }
+      let map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 13,
+      });
+      setPin(map, homeAddress, true, "הבית שלך");
+      for (let donation in filterdList) {
+        setPin(
+          map,
+          filterdList[donation].address,
+          false,
+          setDescription(filterdList[donation])
+        );
+      }
+    });
+
+  });
+}
+
 function setPin(map, Adreess, home, description) {
   geocoder = new google.maps.Geocoder();
   geocoder.geocode({ address: Adreess }, function (results, status) {
@@ -124,7 +132,7 @@ function setDescription(donation) {
 
 function getAdressFromPin(marker) {
   let str = marker.getTitle();
-  for (var i = 7; i < str.length; i++) {}
+  for (var i = 7; i < str.length; i++) { }
   var i = 7;
   while (str[i] != "ש") {
     i++;
