@@ -155,9 +155,9 @@ function updateTable() {
   let table = document.getElementById("donationTable");
   let rowCount = table.rows.length;
   console.log(rowCount);
-  if (rowCount > 0) {
-    for (let i = rowCount; i > 0; i--) {
-      if (table.rows[i - 1].id !== "t_header") table.deleteRow(i - 1);
+  if (rowCount > 1) {
+    for (let i = rowCount; i > 1; i--) {
+      if (table.rows[i].id !== "t_header") table.deleteRow(i - 1);
     }
   }
   filterList(all_donation_list, (filteredList) => {

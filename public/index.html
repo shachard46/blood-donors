@@ -47,52 +47,53 @@
                     מרחק מקסימלי מהכתובת שלך - <span id="DisValue"></span>
                     <br><br> <!-- line break -->
                 </div>
-                <input type="range" min="1" max="100" value="30" class="slider center-block" id="disRange" dir="ltr">
+            </div>
+
+            <input type="range" min="1" max="100" value="30" class="slider center-block" id="disRange" dir="ltr">
+            <script>
+                var slider = document.getElementById("disRange");
+                var output = document.getElementById("DisValue");
+                output.innerHTML = slider.value + ` ק"מ`;
+                slider.oninput = function () {
+                    output.innerHTML = this.value + ` ק"מ`;
+                }
+            </script>
+            <br><br> <!-- line break -->
+
+            <!-- date -->
+            <input type="text" class="inputDate" id="date" placeholder="dd/mm/yy">
+            <!-- <input type="date" class="inputDate" id="date"> -->
+            <select class="inputSelect" required="required" aria-required="true" name="select" id="selectList">
+                <option value="">בחר טווח תאריכים</option>
+                <option value="תאריך מדוייק">תאריך מדוייק</option>
+                <option value="+- 5 ימים">+- 5 ימים</option>
+            </select>
+            <br><br> <!-- line break -->
+
+            <button type="submit" class="Button" onClick=getVal()>
+                <span>סינון</span>
                 <script>
-                    var slider = document.getElementById("disRange");
-                    var output = document.getElementById("DisValue");
-                    output.innerHTML = slider.value + ` ק"מ`;
-                    slider.oninput = function () {
-                        output.innerHTML = this.value + ` ק"מ`;
+                    function getVal() {
+                        var txt = document.getElementById("location_input").value;
+                        SetHomeAddress(txt);
+                        updateTable();
                     }
+
                 </script>
-                <br><br> <!-- line break -->
+            </button>
+            <br><br> <!-- line break -->
+            <br><br> <!-- line break -->
 
-                <!-- date -->
-                <input type="text" class="inputDate" id="date" placeholder="dd/mm/yy">
-                <!-- <input type="date" class="inputDate" id="date"> -->
-                <select class="inputSelect" required="required" aria-required="true" name="select" id="selectList">
-                    <option value="">בחר טווח תאריכים</option>
-                    <option value="תאריך מדוייק">תאריך מדוייק</option>
-                    <option value="+- 5 ימים">+- 5 ימים</option>
-                </select>
-                <br><br> <!-- line break -->
-
-                <button type="submit" class="Button" onClick=getVal()>
-                    <span>סינון</span>
-                    <script>
-                        function getVal() {
-                            var txt = document.getElementById("location_input").value;
-                            SetHomeAddress(txt);
-                            updateTable();
-                        }
-
-                    </script>
-                </button>
-                <br><br> <!-- line break -->
-                <br><br> <!-- line break -->
-
-                <p class="discription">תוצאות הסינון:</p>
-                <div style="overflow:scroll;height: 250px;;width:100%;overflow:auto;">
-                    <table id="donationTable" cellspacing="0" cellpadding="0" width="300">
-                        <tr id="t_header">
-                            <th><b>תאריך</b></th>
-                            <th><b>מיקום</b></th>
-                            <th><b>זמן</b></th>
-                            <th><b>קירבה</b></th>
-                        </tr>
-                    </table>
-                </div>
+            <p class="discription">תוצאות הסינון:</p>
+            <div class="scroll">
+                <table id="donationTable" cellspacing="0" cellpadding="0" width="300">
+                    <tr id="t_header">
+                        <th><b>תאריך</b></th>
+                        <th><b>מיקום</b></th>
+                        <th><b>זמן</b></th>
+                        <th><b>קירבה</b></th>
+                    </tr>
+                </table>
             </div>
             <div class="allfooter">
                 <div class="footerWarp" dir="ltr" onclick="location.href='index.html'">
@@ -103,15 +104,8 @@
                     </p>
 
                 </div>
-                <!-- <button class="Button return" dir="rtl" onclick="location.href='signUp.html'">הרשמה</button> -->
-
-                <!-- <img src="./img/LogoV3.png" class="logo"> -->
-
-                <!-- <button class="Button return" onclick="location.href='signUp.html'">הרשמה</button> -->
-
             </div>
         </div>
-    </div>
     </div>
     <div class="map_container">
         <div id="map" class="map_container"></div>
