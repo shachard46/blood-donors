@@ -10,7 +10,7 @@ var tableRows = document.getElementsByTagName("myTableData");
 const DAY_IN_MS = 8.64e7;
 
 for (var i = 0; i < tableRows.length; i += 1) {
-  tableRows[i].addEventListener("mouseover", function (e) {});
+  tableRows[i].addEventListener("mouseover", function (e) { });
   // or attachEvent, depends on browser
 }
 
@@ -143,7 +143,7 @@ function updateTable() {
   let rowCount = table.rows.length;
   console.log(rowCount);
   if (rowCount > 0) {
-    for (let i = rowCount; i > 0; i--) {
+    for (let i = rowCount; i > 1; i--) {
       table.deleteRow(i - 1);
     }
   }
