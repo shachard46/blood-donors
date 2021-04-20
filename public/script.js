@@ -59,7 +59,7 @@ function coordinatesToName(Address, callback) {
   geocoder = new google.maps.Geocoder();
   geocoder.geocode({ address: Address }, function (results, status) {
     if (status === "OK") {
-      let AddressName = results[0].address_components[1].long_name;
+      let AddressName = results[0].formatted_address;
       callback(AddressName);
     } else {
       alert("Geocode was not successful for the following reason: " + status);
