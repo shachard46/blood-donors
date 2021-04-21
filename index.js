@@ -6,7 +6,7 @@ const multer = require("multer");
 const app = express();
 const port = process.env.PORT ? process.env.PORT : 80;
 const origin = "/index.html";
-const thanksPage = "/thanks.html";
+const thanksPage = "/Thanks.html";
 const upload = multer();
 app.use(express.static("./public"));
 app.use(bodyParser.urlencoded());
