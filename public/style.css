@@ -174,7 +174,6 @@ td {
   border: 1px solid #c4131d;
 }
 .allfooter {
-  text-align: left;
   background-color: #e5e3e3;
   font-family: "Roboto", Sans-serif;
   color: #c4131d;
@@ -193,6 +192,8 @@ td {
   padding-right: 40px;
   padding-bottom: 5px;
   padding-top: 40px;
+  font-family: "Roboto", Sans-serif;
+  color: #c4131d;
 }
 #t_header {
   position: sticky;
