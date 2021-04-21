@@ -182,5 +182,5 @@ function post() {
     (node) => (formData[node.name] = node.value)
   );
   $.ajax({ type: "POST", url: "/api/users", data: formData, enctype: true });
-  location.href = "thanks.html";
+  location.href = "Thanks.html";
 }
