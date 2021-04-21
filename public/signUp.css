@@ -51,8 +51,10 @@ body {
 
 }
 .footerWarp {
-  padding-top: 100px;
   color: #c4131d;
+  position: fixed;
+  bottom: 0;
+  width: 50%;
 }
 
 @media screen and (max-width:1500px) {
@@ -73,8 +75,7 @@ body {
     width: 20%;
   }
   .footerWarp{
-    padding-top: 15px;
-    padding-bottom: 15px;
+  
     width: 100%;
 
   }
