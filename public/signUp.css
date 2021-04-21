@@ -26,6 +26,7 @@ body {
   padding: 1% 5% 1% 5%;
   height: 50px;
   font-family: "Roboto", Sans-serif;
+  z-index: 2;
 }
 
 .Button {
@@ -37,6 +38,8 @@ body {
   font-size: 15px;
   padding: 12px 24px;
   border-radius: 5px;
+  z-index: 3;
+
 }
 .Button:hover {
   background-color: #c4131d;
@@ -52,12 +55,30 @@ body {
 }
 .footerWarp {
   color: #c4131d;
-  position: fixed;
-  bottom: 0;
+  position: fixed; 
   width: 50%;
+  bottom: 0;
+  
 }
-
 @media screen and (max-width:1500px) {
+  .singUp_container {
+    right: 0;
+    width: 100%;
+    border-width: 0;
+    overflow: auto;
+
+  }
+  .inputText{
+    width: 90%;
+    text-align: center;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+  .footerWarp{
+    width: 100%;
+  }
+}
+@media screen and (max-width:1000px) {
   .singUp_container {
     right: 0;
     width: 100%;
@@ -75,8 +96,8 @@ body {
     width: 20%;
   }
   .footerWarp{
-  
+    position: relative; 
     width: 100%;
-
+    padding-bottom: 15px;
   }
 }
