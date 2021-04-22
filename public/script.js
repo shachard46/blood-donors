@@ -27,15 +27,14 @@ function filterByDate(exact, list, date) {
     calDate = new Date(dateParts[1] + "/" + dateParts[0] + "/" + dateParts[2]);
     let inRange =
       Math.abs(calDate.getTime() - date.getTime()) <= 5 * DAY_IN_MS &&
-      calDate.getTime() >= Date.now();
+      calDate.getTime() + DAY_IN_MS >= Date.now();
     return exact
       ? translateCalanderDate(calDate) == translateCalanderDate(date) &&
-          calDate.getTime() >= Date.now()
+          calDate.getTime() + DAY_IN_MS >= Date.now()
       : inRange;
   });
 }
 function filterList(list, callback) {
-  console.log("in list", list);
   filterByDistance(
     document.getElementById("disRange").value,
     filterByDate(
@@ -48,11 +47,10 @@ function filterList(list, callback) {
 }
 function SetHomeAddress(Adreess) {
   homeAddress = Adreess;
-  updateMap();
 }
-function clickMarker(marker) {
+function clickMarker(marker, list) {
   google.maps.event.addListener(marker, "click", function () {
-    getRowIndex(marker);
+    getRowIndex(marker, list);
     //markRow
   });
 }
@@ -122,53 +120,52 @@ function getDistances(origin, destinations, callback) {
   let startTimes = _.map(destinations, (dest) => dest.startTime);
   let endTimes = _.map(destinations, (dest) => dest.endTime);
 
-  function recDistances(addresses, cb) {
-    let currentAdresses = addresses;
-    let nextAdresses = [];
-    if (addresses.length >= 25) {
-      currentAdresses = addresses.slice(0, 25);
-      nextAdresses = addresses.slice(25, addresses.length);
-    }
-    let settings = {
-      origins: [origin], //set origin, you can specify multiple sources here
-      destinations: currentAdresses, //set destination, you can specify multiple destinations here
-      travelMode: google.maps.TravelMode.DRIVING, //set the travelmode
-      unitSystem: google.maps.UnitSystem.METRIC, //The unit system to use when displaying distance
-      avoidHighways: false,
-      avoidTolls: false,
-    };
-    if (nextAdresses.length == 0) {
-      cb(response, status);
-      return;
-    }
-    recDistances(
-      nextAdresses,
-      service.getDistanceMatrix(settings, (response, status) => {
-        addToDistances(response, status);
-      }),
-      settings.destinations.length == 0
-    );
-  }
-  function addToDistances(response, status) {
+  let settings = {
+    origins: [origin], //set origin, you can specify multiple sources here
+    destinations: addresses, //set destination, you can specify multiple destinations here
+    travelMode: google.maps.TravelMode.DRIVING, //set the travelmode
+    unitSystem: google.maps.UnitSystem.METRIC, //The unit system to use when displaying distance
+    avoidHighways: false,
+    avoidTolls: false,
+  };
+  function addToDistances(response, status, startIndex) {
     if (status == google.maps.DistanceMatrixStatus.OK) {
       const elements = response.rows[0].elements;
       for (i = 0; i < elements.length; i++) {
         if (elements[i].status == "OK")
           distances.push({
-            address: addresses[i],
-            date: dates[i],
+            address: addresses[startIndex + i],
+            date: dates[startIndex + i],
             distance: Number(elements[i].distance.value) / 1000,
-            startTime: startTimes[i],
-            endTime: endTimes[i],
+            startTime: startTimes[startIndex + i],
+            endTime: endTimes[startIndex + i],
           });
       }
     }
   }
-  recDistances(addresses, (response, status) => {
-    addToDistances(response, status);
-    distances = _.sortBy(distances, (distance) => distance.distance);
-    callback(distances);
-  });
+  function rec(startIndex) {
+    let currentAdresses = addresses.slice(startIndex, addresses.length);
+    if (addresses.length >= 25 + startIndex) {
+      currentAdresses = addresses.slice(startIndex, startIndex + 25);
+      startIndex = startIndex + 25;
+    } else startIndex = addresses.length;
+    settings.destinations = currentAdresses;
+
+    if (startIndex == addresses.length) {
+      service.getDistanceMatrix(settings, (response, status) => {
+        addToDistances(response, status, addresses.length - startIndex);
+        distances = _.sortBy(distances, (distance) => distance.distance);
+        callback(distances);
+      });
+      return;
+    }
+
+    service.getDistanceMatrix(settings, (response, status) => {
+      addToDistances(response, status, startIndex - 25);
+      rec(startIndex);
+    });
+  }
+  rec(0);
 }
 
 function addKM(list) {
@@ -192,7 +189,7 @@ function findByAddressAndDate(address, date) {
 function readFromFile() {
   $.getJSON("./donations.json", (data) => (all_donation_list = data));
 }
-function updateTable() {
+function updateTable(list) {
   let table = document.getElementById("donationTable");
   let rowCount = table.rows.length;
   if (rowCount > 0) {
@@ -200,25 +197,24 @@ function updateTable() {
       if (table.rows[i - 1].id !== "t_header") table.deleteRow(i - 1);
     }
   }
-  filterList(all_donation_list, (filteredList) => {
-    filteredList.forEach((element) => {
-      rowCount = table.rows.length;
-      let row = table.insertRow(rowCount);
-      row.insertCell(0).innerHTML = findByAddressAndDate(
-        element.address,
-        element.date
-      ).date;
-      row.insertCell(1).innerHTML = findByAddressAndDate(
-        element.address,
-        element.date
-      ).address;
-      row.insertCell(2).innerHTML =
-        findByAddressAndDate(element.address, element.date).startTime +
-        "-" +
-        findByAddressAndDate(element.address, element.date).endTime;
-      row.insertCell(3).innerHTML =
-        parseFloat(element.distance).toFixed(1).toString() + ` ק"מ`;
-    });
+  console.log(list);
+  list.forEach((element) => {
+    rowCount = table.rows.length;
+    let row = table.insertRow(rowCount);
+    row.insertCell(0).innerHTML = findByAddressAndDate(
+      element.address,
+      element.date
+    ).date;
+    row.insertCell(1).innerHTML = findByAddressAndDate(
+      element.address,
+      element.date
+    ).address;
+    row.insertCell(2).innerHTML =
+      findByAddressAndDate(element.address, element.date).startTime +
+      "-" +
+      findByAddressAndDate(element.address, element.date).endTime;
+    row.insertCell(3).innerHTML =
+      parseFloat(element.distance).toFixed(1).toString() + ` ק"מ`;
   });
 }
 function post() {
@@ -230,4 +226,26 @@ function post() {
   );
   $.ajax({ type: "POST", url: "/api/users", data: formData, enctype: true });
   location.href = "Thanks.html";
+}
+
+function sss(list, index) {
+  if (list.length == index) {
+    $.getJSON("./donations.json", (data) => {
+      data.length = 0;
+      data.concat(all_donation_list);
+    });
+    return;
+  }
+  let donation = list[index];
+  geocoder.geocode({ address: donation.address }, (results, status) => {
+    if (status == "OK") {
+      all_donation_list[index].position = results[0].geometry.location;
+    } else {
+      console.log(
+        "Geocode was not successful for the following reason: ",
+        status
+      );
+    }
+    sss(list, index + 1);
+  });
 }

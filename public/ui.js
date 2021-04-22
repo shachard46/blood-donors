@@ -7,19 +7,17 @@ function translateCalanderDate(date) {
   let newDate = [day, month, year].join("/");
   return newDate;
 }
-function getRowIndex(marker) {
+function getRowIndex(marker, list) {
   let i = 1;
-  filterList(all_donation_list, (filteredList) => {
-    filteredList.forEach((element) => {
-      if (
-        findByAddressAndDate(element.address, element.date).address ==
-        getAdressFromPin(marker)
-      ) {
-        markRow(i);
-      } else {
-        i++;
-      }
-    });
+  list.forEach((element) => {
+    if (
+      findByAddressAndDate(element.address, element.date).address ==
+      getAdressFromPin(marker)
+    ) {
+      markRow(i);
+    } else {
+      i++;
+    }
   });
 }
 function getRGB(str) {
@@ -71,53 +69,61 @@ function initMap() {
   });
 }
 
-function updateMap() {
-  filterList(all_donation_list, (filterdList) => {
-    getCurrentLocation((Address) => {
-      if (homeAddress == undefined) {
-        homeAddress = Address;
-        document.getElementById("location_input").value = homeAddress;
-      }
-      let map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 13,
-      });
-      setPin(map, homeAddress, true, "הבית שלך");
-      for (let donation in filterdList) {
-        setPin(
-          map,
-          filterdList[donation].address,
-          false,
-          setDescription(filterdList[donation])
-        );
-      }
+function updateMap(list) {
+  getCurrentLocation((Address) => {
+    if (homeAddress == undefined) {
+      homeAddress = Address;
+      document.getElementById("location_input").value = homeAddress;
+    }
+    let map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 13,
     });
+    setPin(map, homeAddress, true, "הבית שלך");
+    setPins(list, map, 0);
   });
 }
-
+function setPins(list, map, index) {
+  if (list.length == index) {
+    return;
+  }
+  let donation = list[index];
+  geocoder.geocode({ address: donation.address }, (results, status) => {
+    if (status == "OK") {
+      const Marker = new google.maps.Marker({
+        position: results[0].geometry.location,
+        map: map,
+        icon: "./img/Mada_icon.png",
+        title: setDescription(donation),
+      });
+      clickMarker(Marker, list);
+    } else {
+      console.log(
+        "Geocode was not successful for the following reason: ",
+        status
+      );
+    }
+    setTimeout(() => {
+      setPins(list, map, index + 1);
+    }, 200);
+  });
+}
 function setPin(map, Adreess, home, description) {
   geocoder = new google.maps.Geocoder();
-  geocoder.geocode({ address: Adreess }, function (results, status) {
+  geocoder.geocode({ address: Adreess }, (results, status) => {
     if (status === "OK") {
-      if (home == true) {
-        map.setCenter(results[0].geometry.location);
-        const Marker = new google.maps.Marker({
-          position: results[0].geometry.location,
-          map: map,
-          icon: "./img/Home_icon.png",
-          title: description,
-        });
-        clickMarker(Marker);
-      } else {
-        const Marker = new google.maps.Marker({
-          position: results[0].geometry.location,
-          map: map,
-          icon: "./img/Mada_icon.png",
-          title: description,
-        });
-        clickMarker(Marker);
-      }
+      map.setCenter(results[0].geometry.location);
+      const Marker = new google.maps.Marker({
+        position: results[0].geometry.location,
+        map: map,
+        icon: home ? "./img/Home_icon.png" : "./img/Mada_icon.png",
+        title: description,
+      });
+      clickMarker(Marker);
     } else {
-      alert("Geocode was not successful for the following reason: " + status);
+      console.log(
+        "Geocode was not successful for the following reason: ",
+        status
+      );
     }
   });
 }
