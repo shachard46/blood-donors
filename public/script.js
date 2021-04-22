@@ -66,23 +66,17 @@ function coordinatesToName(Address, callback) {
   });
 }
 function getCurrentLocation(callback) {
-  navigator.permissions.query({ name: "geolocation" }).then((result) => {
-    if (result.state == "granted") {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const pos =
-              position.coords.latitude + "," + position.coords.longitude;
-            coordinatesToName(pos, (result) => callback(result));
-            // alert(pos.value);
-          },
-          () => {}
-        );
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const pos = position.coords.latitude + "," + position.coords.longitude;
+        coordinatesToName(pos, (result) => callback(result));
+      },
+      () => {
+        callback();
       }
-    } else {
-      callback();
-    }
-  });
+    );
+  }
 }
 function autoComplete() {
   let addressField = document.getElementById("location_input");
