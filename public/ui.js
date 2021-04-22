@@ -79,32 +79,18 @@ function updateMap(list) {
       zoom: 13,
     });
     setPin(map, homeAddress, true, "הבית שלך");
-    setPins(list, map, 0);
+    setPins(list, map);
   });
 }
-function setPins(list, map, index) {
-  if (list.length == index) {
-    return;
-  }
-  let donation = list[index];
-  geocoder.geocode({ address: donation.address }, (results, status) => {
-    if (status == "OK") {
-      const Marker = new google.maps.Marker({
-        position: results[0].geometry.location,
-        map: map,
-        icon: "./img/Mada_icon.png",
-        title: setDescription(donation),
-      });
-      clickMarker(Marker, list);
-    } else {
-      console.log(
-        "Geocode was not successful for the following reason: ",
-        status
-      );
-    }
-    setTimeout(() => {
-      setPins(list, map, index + 1);
-    }, 200);
+function setPins(list, map) {
+  _.each(list, (donation) => {
+    const Marker = new google.maps.Marker({
+      position: donation.position,
+      map: map,
+      icon: "./img/Mada_icon.png",
+      title: setDescription(donation),
+    });
+    clickMarker(Marker, list);
   });
 }
 function setPin(map, Adreess, home, description) {
@@ -143,3 +129,4 @@ function getAdressFromPin(marker) {
   let res = str.slice(7, i - 1);
   return res;
 }
+

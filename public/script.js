@@ -113,12 +113,8 @@ function recDistances(service, addresses, cb) {
 }
 
 function getDistances(origin, destinations, callback) {
-  let distances = [];
   let service = new google.maps.DistanceMatrixService(); //initialize the distance service
   let addresses = _.map(destinations, (dest) => dest.address);
-  let dates = _.map(destinations, (dest) => dest.date);
-  let startTimes = _.map(destinations, (dest) => dest.startTime);
-  let endTimes = _.map(destinations, (dest) => dest.endTime);
 
   let settings = {
     origins: [origin], //set origin, you can specify multiple sources here
@@ -133,29 +129,25 @@ function getDistances(origin, destinations, callback) {
       const elements = response.rows[0].elements;
       for (i = 0; i < elements.length; i++) {
         if (elements[i].status == "OK")
-          distances.push({
-            address: addresses[startIndex + i],
-            date: dates[startIndex + i],
-            distance: Number(elements[i].distance.value) / 1000,
-            startTime: startTimes[startIndex + i],
-            endTime: endTimes[startIndex + i],
-          });
+          destinations[startIndex + i].distance =
+            Number(elements[i].distance.value) / 1000;
       }
     }
   }
   function rec(startIndex) {
     let currentAdresses = addresses.slice(startIndex, addresses.length);
+    let end = 0;
     if (addresses.length >= 25 + startIndex) {
       currentAdresses = addresses.slice(startIndex, startIndex + 25);
       startIndex = startIndex + 25;
-    } else startIndex = addresses.length;
+    } else end = addresses.length;
     settings.destinations = currentAdresses;
 
-    if (startIndex == addresses.length) {
+    if (end == addresses.length) {
       service.getDistanceMatrix(settings, (response, status) => {
-        addToDistances(response, status, addresses.length - startIndex);
-        distances = _.sortBy(distances, (distance) => distance.distance);
-        callback(distances);
+        addToDistances(response, status, startIndex);
+        destinations = _.sortBy(destinations, (distance) => distance.distance);
+        callback(destinations);
       });
       return;
     }
@@ -230,10 +222,10 @@ function post() {
 
 function sss(list, index) {
   if (list.length == index) {
-    $.getJSON("./donations.json", (data) => {
-      data.length = 0;
-      data.concat(all_donation_list);
-    });
+    // $.getJSON("./donations.json", (data) => {
+    //   data.length = 0;
+    //   data.concat(all_donation_list);
+    // });
     return;
   }
   let donation = list[index];
@@ -246,6 +238,8 @@ function sss(list, index) {
         status
       );
     }
-    sss(list, index + 1);
+    setTimeout(() => {
+      sss(list, index + 1);
+    }, 1000);
   });
 }
