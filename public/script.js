@@ -35,6 +35,7 @@ function filterByDate(exact, list, date) {
   });
 }
 function filterList(list, callback) {
+  console.log("in list", list);
   filterByDistance(
     document.getElementById("disRange").value,
     filterByDate(
@@ -89,41 +90,87 @@ function autoComplete() {
   //   setPin(autocomplete.getPlace());
   // });
 }
+
+function recDistances(service, addresses, cb) {
+  let currentAdresses = addresses;
+  let nextAdresses = [];
+  if (addresses.length >= 25) {
+    currentAdresses = addresses.slice(0, 25);
+    nextAdresses = addresses.slice(25, addresses.length);
+  }
+  let settings = {
+    origins: [origin], //set origin, you can specify multiple sources here
+    destinations: currentAdresses, //set destination, you can specify multiple destinations here
+    travelMode: google.maps.TravelMode.DRIVING, //set the travelmode
+    unitSystem: google.maps.UnitSystem.METRIC, //The unit system to use when displaying distance
+    avoidHighways: false,
+    avoidTolls: false,
+  };
+  if (nextAdresses.length == 0) cb();
+  recDistances(
+    nextAdresses,
+    service.getDistanceMatrix(settings, cb),
+    settings.destinations.length == 0
+  );
+}
+
 function getDistances(origin, destinations, callback) {
-  var distances = [];
+  let distances = [];
   let service = new google.maps.DistanceMatrixService(); //initialize the distance service
   let addresses = _.map(destinations, (dest) => dest.address);
   let dates = _.map(destinations, (dest) => dest.date);
   let startTimes = _.map(destinations, (dest) => dest.startTime);
   let endTimes = _.map(destinations, (dest) => dest.endTime);
-  service.getDistanceMatrix(
-    {
+
+  function recDistances(addresses, cb) {
+    let currentAdresses = addresses;
+    let nextAdresses = [];
+    if (addresses.length >= 25) {
+      currentAdresses = addresses.slice(0, 25);
+      nextAdresses = addresses.slice(25, addresses.length);
+    }
+    let settings = {
       origins: [origin], //set origin, you can specify multiple sources here
-      destinations: addresses, //set destination, you can specify multiple destinations here
+      destinations: currentAdresses, //set destination, you can specify multiple destinations here
       travelMode: google.maps.TravelMode.DRIVING, //set the travelmode
       unitSystem: google.maps.UnitSystem.METRIC, //The unit system to use when displaying distance
       avoidHighways: false,
       avoidTolls: false,
-    },
-    (response, status) => {
-      if (status == google.maps.DistanceMatrixStatus.OK) {
-        const elements = response.rows[0].elements;
-        for (i = 0; i < elements.length; i++) {
-          if (elements[i].status == "OK")
-            distances.push({
-              address: addresses[i],
-              date: dates[i],
-              distance: Number(elements[i].distance.value) / 1000,
-              startTime: startTimes[i],
-              endTime: endTimes[i],
-            });
-        }
-        distances = _.sortBy(distances, (distance) => distance.distance);
-        callback(distances);
+    };
+    if (nextAdresses.length == 0) {
+      cb(response, status);
+      return;
+    }
+    recDistances(
+      nextAdresses,
+      service.getDistanceMatrix(settings, (response, status) => {
+        addToDistances(response, status);
+      }),
+      settings.destinations.length == 0
+    );
+  }
+  function addToDistances(response, status) {
+    if (status == google.maps.DistanceMatrixStatus.OK) {
+      const elements = response.rows[0].elements;
+      for (i = 0; i < elements.length; i++) {
+        if (elements[i].status == "OK")
+          distances.push({
+            address: addresses[i],
+            date: dates[i],
+            distance: Number(elements[i].distance.value) / 1000,
+            startTime: startTimes[i],
+            endTime: endTimes[i],
+          });
       }
     }
-  );
+  }
+  recDistances(addresses, (response, status) => {
+    addToDistances(response, status);
+    distances = _.sortBy(distances, (distance) => distance.distance);
+    callback(distances);
+  });
 }
+
 function addKM(list) {
   for (let i = 0; i < list.length; i++) {
     list[i].distance = list[i].distance + "km";
