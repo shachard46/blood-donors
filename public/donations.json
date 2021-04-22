@@ -1,110 +1,110 @@
 [
   {
-    "date": "24/4/2021",
-    "address": "אמץ",
-    "startTime": "17:00",
-    "endTime": "19:00"
+    "date": "22/04/2021",
+    "address": "קהילת ציון 2 עפולה, תחנה מרכזית",
+    "startTime": "10:00",
+    "endTime": "17:00"
   },
   {
-    "date": "20/4/2021",
-    "address": "בחן",
-    "startTime": "13:00",
+    "date": "22/04/2021",
+    "address": "לאן 25 רמת גן, המקלט בגן יהודה",
+    "startTime": "16:00",
+    "endTime": "22:00"
+  },
+  {
+    "date": "22/04/2021",
+    "address": "הרקון 2 הוד השרון, מתחם שרונים",
+    "startTime": "15:00",
+    "endTime": "21:00"
+  },
+  {
+    "date": "22/04/2021",
+    "address": "קרית ארבע, קרית ארבע",
+    "startTime": "18:00",
+    "endTime": "22:30"
+  },
+  {
+    "date": "22/04/2021",
+    "address": "העליה השניה 8 חיפה, רמבם - קניון סגול",
+    "startTime": "09:30",
     "endTime": "15:00"
   },
   {
-    "date": "28/4/2021",
-    "address": "חוגלה, Israel",
-    "startTime": "17:00",
-    "endTime": "19:30"
+    "date": "22/04/2021",
+    "address": "דליות 4 קצרין, קצרין - מרכז מסחרי",
+    "startTime": "11:00",
+    "endTime": "18:00"
   },
   {
-    "date": "27/4/2021",
-    "address": "בת חפר",
-    "startTime": "17:00",
-    "endTime": "19:30"
+    "date": "22/04/2021",
+    "address": "החשמונאים 96 תל אביב יפו, קניון T.L.V",
+    "startTime": "14:30",
+    "endTime": "20:30"
   },
   {
-    "date": "23/4/2021",
-    "address": "בת חפר",
-    "startTime": "17:00",
-    "endTime": "19:30"
+    "date": "22/04/2021",
+    "address": "המנופים 9 הרצליה, מרכז מסחרי",
+    "startTime": "09:00",
+    "endTime": "15:00"
   },
   {
-    "date": "27/4/2021",
-    "address": "בת חפר",
-    "startTime": "17:00",
-    "endTime": "19:30"
+    "date": "22/04/2021",
+    "address": "המג 7 ירושלים, רח המג 7 רוממה , - תחנת מדא",
+    "startTime": "08:00",
+    "endTime": "16:00"
   },
   {
-    "date": "28/4/2021",
-    "address": "בת חפר",
-    "startTime": "17:00",
-    "endTime": "19:30"
+    "date": "22/04/2021",
+    "address": "ד.נ.חלוצה צוחר, התרמה במועדון",
+    "startTime": "16:00",
+    "endTime": "19:00"
   },
   {
-    "date": "29/4/2021",
-    "address": "בת חפר",
-    "startTime": "17:00",
-    "endTime": "19:30"
+    "date": "22/04/2021",
+    "address": "קדרים, מרפאה",
+    "startTime": "14:00",
+    "endTime": "19:00"
   },
   {
-    "date": "29/4/2021",
-    "address": "יד חנה",
-    "startTime": "17:00",
-    "endTime": "19:30"
+    "date": "22/04/2021",
+    "address": "גזית, מועדון",
+    "startTime": "15:30",
+    "endTime": "20:00"
   },
   {
-    "date": "29/4/2021",
-    "address": "בחן",
-    "startTime": "17:00",
-    "endTime": "19:30"
+    "date": "22/04/2021",
+    "address": "מעוז חיים, מועדון",
+    "startTime": "15:00",
+    "endTime": "20:00"
   },
   {
-    "date": "29/4/2021",
-    "address": "רופין",
-    "startTime": "17:00",
-    "endTime": "19:30"
+    "date": "22/04/2021",
+    "address": "המלך ג'ורג' 20 ירושלים, משביר י-ם",
+    "startTime": "09:00",
+    "endTime": "21:00"
   },
   {
-    "date": "29/4/2021",
-    "address": "ניצני עוז",
-    "startTime": "17:00",
-    "endTime": "19:30"
+    "date": "22/04/2021",
+    "address": "גן שמואל, חדר אוכל",
+    "startTime": "14:30",
+    "endTime": "20:30"
   },
   {
-    "date": "29/4/2021",
-    "address": "נתובות",
-    "startTime": "17:00",
-    "endTime": "19:30"
+    "date": "22/04/2021",
+    "address": "א.ת. באר טוביה, ביג קרית מלאכי",
+    "startTime": "10:00",
+    "endTime": "17:00"
   },
   {
-    "date": "29/4/2021",
-    "address": "כפר מונש",
-    "startTime": "17:00",
-    "endTime": "19:30"
+    "date": "22/04/2021",
+    "address": "בית חולים תהש רמת גן, - שרותי הדם מדא",
+    "startTime": "08:00",
+    "endTime": "20:00"
   },
   {
-    "date": "29/4/2021",
-    "address": "המעפיל",
-    "startTime": "17:00",
-    "endTime": "19:30"
-  },
-  {
-    "date": "29/4/2021",
-    "address": "עין החורש",
-    "startTime": "17:00",
-    "endTime": "19:30"
-  },
-  {
-    "date": "29/4/2021",
-    "address": "חוגלה",
-    "startTime": "17:00",
-    "endTime": "19:30"
-  },
-  {
-    "date": "25/4/2021",
-    "address": "גן יאשיה",
-    "startTime": "18:00",
-    "endTime": "19:30"
+    "date": "22/04/2021",
+    "address": "מרחב עם, מבנה קהילתי במרחב -עם",
+    "startTime": "16:00",
+    "endTime": "19:00"
   }
 ]
