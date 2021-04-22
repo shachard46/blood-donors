@@ -57,29 +57,22 @@ function markRow(index) {
 
 //map
 function initMap() {
-  getCurrentLocation((Address) => {
-    if (homeAddress == undefined) {
-      homeAddress = Address;
-      document.getElementById("location_input").value = homeAddress;
-    }
-    let map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 13,
-    });
-    setPin(map, homeAddress, true, "הבית שלך");
-  });
+  updateMap([], true);
 }
 
-function updateMap(list) {
+function updateMap(list, init) {
   getCurrentLocation((Address) => {
-    if (homeAddress == undefined) {
+    if (homeAddress == undefined && Address) {
       homeAddress = Address;
       document.getElementById("location_input").value = homeAddress;
+    } else {
+      homeAddress = "תל אביב";
     }
     let map = new google.maps.Map(document.getElementById("map"), {
       zoom: 13,
     });
     setPin(map, homeAddress, true, "הבית שלך");
-    setPins(list, map);
+    if (!init) setPins(list, map);
   });
 }
 function setPins(list, map) {
@@ -129,4 +122,3 @@ function getAdressFromPin(marker) {
   let res = str.slice(7, i - 1);
   return res;
 }
-
