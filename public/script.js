@@ -84,9 +84,6 @@ function autoComplete() {
     fields: ["address_components", "geometry"],
     types: [],
   });
-  // autocomplete.addListener("place_changed", () => {
-  //   setPin(autocomplete.getPlace());
-  // });
 }
 
 function recDistances(service, addresses, cb) {
@@ -222,10 +219,6 @@ function post() {
 
 function sss(list, index) {
   if (list.length == index) {
-    // $.getJSON("./donations.json", (data) => {
-    //   data.length = 0;
-    //   data.concat(all_donation_list);
-    // });
     return;
   }
   let donation = list[index];
