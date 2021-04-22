@@ -10,7 +10,7 @@ var tableRows = document.getElementsByTagName("myTableData");
 const DAY_IN_MS = 8.64e7;
 
 for (var i = 0; i < tableRows.length; i += 1) {
-  tableRows[i].addEventListener("mouseover", function (e) { });
+  tableRows[i].addEventListener("mouseover", function (e) {});
   // or attachEvent, depends on browser
 }
 
@@ -27,10 +27,10 @@ function filterByDate(exact, list, date) {
     calDate = new Date(dateParts[1] + "/" + dateParts[0] + "/" + dateParts[2]);
     let inRange =
       Math.abs(calDate.getTime() - date.getTime()) <= 5 * DAY_IN_MS &&
-      calDate.getTime() > Date.now();
+      calDate.getTime() >= Date.now();
     return exact
       ? translateCalanderDate(calDate) == translateCalanderDate(date) &&
-      calDate.getTime() > Date.now()
+          calDate.getTime() >= Date.now()
       : inRange;
   });
 }
@@ -74,7 +74,7 @@ function getCurrentLocation(callback) {
         coordinatesToName(pos, (result) => callback(result));
         // alert(pos.value);
       },
-      () => { }
+      () => {}
     );
   }
 }
