@@ -66,7 +66,8 @@ function updateMap(list, init) {
       homeAddress = Address;
       document.getElementById("location_input").value = homeAddress;
     } else {
-      homeAddress = "תל אביב";
+      if (init) homeAddress = "תל אביב";
+      else SetHomeAddress(document.getElementById("location_input").value);
     }
     let map = new google.maps.Map(document.getElementById("map"), {
       zoom: 13,
